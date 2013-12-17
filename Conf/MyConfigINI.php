@@ -1,11 +1,6 @@
 <?php
-define("_SOFTNAME","爱情银行");
+define("_SOFTNAME","爱情银行");//如若更改，则Tpl/Public/title.html文件也需要更改
 define("_VERSION","1.0.0");
-
-$SQLIP="localhost";
-$SQLID="loveBank";
-$SQLPA="loveBank+ht";
-$DATA_DB="loveBank";
 
 $_ANNOUNCEMENT = array("本系统正在测试","已升级成为1.0.0版本","空","空","空","空","空");//预留7个空
 /*

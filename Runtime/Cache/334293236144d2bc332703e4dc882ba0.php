@@ -1,7 +1,7 @@
-<html>
+<?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{$_SOFTNAME}</title>
+<title>爱情银行</title>
 <!-- Bootstrap -->   <link href="__TMPL__css/bootstrap.min.css" rel="stylesheet" media="screen">
 
    <style type="text/css">
@@ -39,15 +39,18 @@
     </style>
 </head>
 
+
 <body>
 
     <div class="container">
 
-      <form class="form-signin" id="login" name="login" method="post" action="islogin" >
-        <h2 class="form-signin-heading">登录</h2>
-        <input type="text" class="input-block-level" placeholder="用户名" name="user_name">
-        <input type="password" class="input-block-level" placeholder="密码" name="user_password">
-        <button class="btn btn-large btn-primary" type="submit">登录</button>
+      <form class="form-signin" id="sign" name="sign" method="post" action="<?php echo U('toSign');?>" >
+        <h2 class="form-signin-heading">注册</h2>
+        	用户名<input type="text" class="input-block-level"  name="userName">
+        	密码<input type="password" class="input-block-level" name="userPassword">
+        	再次输入密码<input type="password" class="input-block-level" name="userPassword2">
+        <button class="btn btn-large btn-primary" type="submit">注册</button>
+        <!-- TODO:返回首页功能 -->
       </form>
 
     </div> <!-- /container --> 

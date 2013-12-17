@@ -1,24 +1,21 @@
 
 
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{$View_SOFTNAME}</title>
-<!-- Bootstrap -->   <link href="__TMPL__css/bootstrap.min.css" rel="stylesheet" media="screen">
-</head>
+<include file="Public:NoHeader" />
+
 <body>
 
 	<div class="hero-unit">
 	<h1 class="text-center">{$View_SOFTNAME}</h1>
 	<p class="text-center">by co8bit {$View_VERSION}</p>
 	<p align="center">
-		<a class="btn btn-primary btn-large" href="__URL__/login.php">
+		<a class="btn btn-primary btn-large" href="{:U('login.php')}">
 		进入	</a>	
 	</p>
 	</div>
 
 
 
-<!-- Bootstrap -->    <script src="__TMPL__js/bootstrap.min.js"></script>
+<include file="Public:NoFooter" />
 </body>
 </html>
