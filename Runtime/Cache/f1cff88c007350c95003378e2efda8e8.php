@@ -86,15 +86,60 @@
 
 		    
 
-<div class="container">
-	<div class="demo-headline">
-		<h1 class="demo-logo">
-			抱歉<p>该功能尚未开放。
-			<p>
-			<a class="btn btn-primary btn-lg" href="<?php echo U('User/index');?>">玩玩其他的</a>
-		</h1>
-	</div> <!-- /demo-headline -->
-</div> <!-- /container -->
+<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/selectTreaty');?>" >
+	<div class="row demo-row">
+		<h2><center>选择条约</center></h2>
+		<div class="col-md-6">
+			<label class="checkbox" for="checkbox1">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox1" data-toggle="checkbox" type="checkbox">
+				Unchecked
+			</label>
+			<label class="checkbox checked" for="checkbox2">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox2" data-toggle="checkbox" type="checkbox">
+				Checked
+			</label>
+		</div>
+		<div class="col-md-6">
+			<label class="checkbox" for="checkbox1">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox1" data-toggle="checkbox" type="checkbox">
+				Unchecked
+			</label>
+			<label class="checkbox checked" for="checkbox2">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox2" data-toggle="checkbox" type="checkbox">
+				Checked
+			</label>
+		</div>
+		<button class="btn btn-info btn-lg btn-block" type="submit">完成</button>
+	</div>
+</form>
+<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/newTreaty');?>" >
+	<div class="row demo-row">
+		<h3 class="demo-panel-title">添加条约</h3>
+		<div class="col-md-7">
+			第一步，请输入条款：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="例如：一起去自习室" name="content" type="text">
+			</div>
+		</div>
+		<div class="col-md-3">
+			第二步，奖惩爱情币：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="例如：5" name="score" type="text">
+			</div>
+		</div>
+		<div class="col-md-2">
+			第三步
+			<div class="form-group">
+				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
+			</div>
+		</div>
+		<a class="login-link" href="#">说明：“奖惩爱情币”一栏只需输入数字即可。如若没做到则扣除相应数量的爱情币，如若做到则会有相应数量的爱情币进账。</a>
+	</div>
+</form>
 		
 	</div> <!-- /container -->
 

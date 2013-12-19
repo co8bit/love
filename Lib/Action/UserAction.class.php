@@ -351,9 +351,20 @@ class UserAction extends Action
 		
 	}
 	
-	public function newTreaty()//添加一个新条约的处理
+	public function newTreaty()//添加新条约的处理
 	{
+		$dbUser = M("User");
+		$lowId = $dbUser->getUserLowId(session("pairId"));
 		
+		$dbLow = M("Low");
+		$dbLow->getContentAndScore($lowId);
+		$content = $dbLow->content;
+		$score = $dbLow->score;
+		$data = NULL;
+		$data["lowId"] = $lowId;
+		$data["content"] = $content._SPECIAL_END_FLAG.$this->_post("content"); //默认最后一条尾部没有结束标志
+		$data["score"] = $score._SPECIAL_END_FLAG.$this->_post("score");
+		$dbLow->save($data);
 	}
 	
 	public function diary()//爱情日记

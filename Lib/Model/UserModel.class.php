@@ -19,5 +19,22 @@ class UserModel extends Model {
 			array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式
 			*/
 	);
+	
+	private $lowId = -1;
+	
+	private function getUserLowId($id)
+	{
+		if ($this->lowId != -1)
+			return $$this->lowId;
+		$dbPair = M("Pair");
+		$result = NULL;
+		$result = $dbPair->where("pairId=$id")->select();
+		if (!$result)//userName不存在
+		{
+			$this->error("获取条约失败");
+		}
+		$this->lowId = $result[0]["lowId"];
+		return $this->lowId;
+	}
 }
 ?>

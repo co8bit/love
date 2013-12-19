@@ -32,10 +32,10 @@ create table pair(
 	user2Id bigint NOT NULL,
 	pairDate datetime,
 	money bigint,
+	lowId bigint,
 	primary key(pairId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert pair values(0,0,0,NULL,0);/*好像不起作用*/
-insert pair values(NULL,1,2,"2013-12-18 00:00:00",100);
+insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1);/*默认lowId=1*/
 
 create table tempPair(
 	tempPairId bigint NOT NULL AUTO_INCREMENT,
@@ -45,59 +45,10 @@ create table tempPair(
 	pairDate datetime,
 	primary key(tempPairId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-/*
-create table product(
-	product_id bigint NOT NULL AUTO_INCREMENT,
-	product_name varchar(100),
-	product_incount bigint,
-	product_outcount bigint,
-	product_inprice double,
-	product_avgoutprice double,
-	product_inremarks varchar(1000),
-	product_outremarks varchar(1000),
-	primary key(product_id)
-);
-create table company(
-	company_name varchar(100),
-	company_street varchar(100),
-	primary key(company_name)
-);
-create table company_phone(
-	company_name varchar(100),
-	company_phonenumber bigint,
-	primary key(company_name,company_phonenumber)
-);
-create table employee(
-	employee_id bigint NOT NULL AUTO_INCREMENT,
-	employee_name varchar(100),
-	employee_salary double,
-	employee_position varchar(100),
-	employee_address varchar(1000),
-	employee_intime datetime,
-	employee_updatetime datetime,
-	primary key(employee_id)
-);
-create table money(
-	money_id bigint NOT NULL AUTO_INCREMENT,
-	money_amount double,
-	money_inamount double,
-	money_remarks varchar(1000),
-	money_intime datetime,
-	money_outtime datetime,
-	company_name varchar(100),
-	primary key(money_id)
-);
-create table buy(
-	company_name varchar(100),
-	product_id bigint,
-	buy_id bigint,
-	buy_time datetime,
-	primary key(company_name,product_id,buy_id)
-);
-create table sale(
-	company_name varchar(100),
-	product_id bigint,
-	sale_id bigint,
-	sale_time datetime,
-	primary key(company_name,product_id,sale_id)
-);*/
+
+create table low(
+	lowId bigint NOT NULL AUTO_INCREMENT,
+	content LONGTEXT,
+	score LONGTEXT,
+	primary key(lowId)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
