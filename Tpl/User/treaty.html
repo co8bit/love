@@ -1,0 +1,50 @@
+<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="{:U('User/selectTreaty')}" >
+	<div class="row demo-row">
+		<h2><center>选择条约</center></h2>
+		<div class="col-md-6">
+			<label class="checkbox" for="checkbox1">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox1" data-toggle="checkbox" type="checkbox">
+				Unchecked
+			</label>
+			<label class="checkbox checked" for="checkbox2">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox2" data-toggle="checkbox" type="checkbox">
+				Checked
+			</label>
+		</div>
+		<div class="col-md-6">
+			<label class="checkbox" for="checkbox1">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox1" data-toggle="checkbox" type="checkbox">
+				Unchecked
+			</label>
+			<label class="checkbox checked" for="checkbox2">
+				<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+				<input value="" id="checkbox2" data-toggle="checkbox" type="checkbox">
+				Checked
+			</label>
+		</div>
+		<button class="btn btn-info btn-lg btn-block" type="submit">完成</button>
+	</div>
+</form>
+<form class="form-signin" id="newPost" name="newPost" method="post" action="{:U('User/newTreaty')}" >
+	<div class="row demo-row">
+		<h3 class="demo-panel-title">添加条约</h3>
+		<div class="col-md-8">
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" name="userId" type="text">
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" name="userId" type="text">
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="form-group">
+				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
+			</div>
+		</div>
+	</div>
+</form>

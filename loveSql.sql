@@ -1,22 +1,50 @@
-/*´´½¨ÓÃ»§¼°¶ÔÓ¦Êı¾İ¿â£¬ÓÃ»§¶Ô¶ÔÓ¦µÄÊı¾İ¿âÏíÓĞËùÓĞÈ¨ÏŞ*/
-CREATE USER 'love'@'localhost' IDENTIFIED BY "love1314";/*ÓÃ»§Ãûlove£¬ÃÜÂëlove1314*/
+/*åˆ›å»ºç”¨æˆ·åŠå¯¹åº”æ•°æ®åº“ï¼Œç”¨æˆ·å¯¹å¯¹åº”çš„æ•°æ®åº“äº«æœ‰æ‰€æœ‰æƒé™*/
+CREATE USER 'love'@'localhost' IDENTIFIED BY "love1314";/*ç”¨æˆ·åloveï¼Œå¯†ç love1314*/
 GRANT USAGE ON * . * TO 'love'@'localhost' IDENTIFIED BY "love1314" WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
 CREATE DATABASE IF NOT EXISTS `love` ;
 GRANT ALL PRIVILEGES ON `love` . * TO 'love'@'localhost';
 
-/*Ê¹ÓÃÊı¾İ¿âlove*/
+/*ä½¿ç”¨æ•°æ®åº“love*/
 use love;
 
-/*´´½¨±í*/
+/*åˆ›å»ºè¡¨*/
 create table user(
+	/*è´¦æˆ·æœ¬èº«ä¿¡æ¯*/
 	userId bigint NOT NULL AUTO_INCREMENT,
-	userName varchar(100) NOT NULL,
+	userName varchar(100) NOT NULL,/*TODOï¼šä¸»é”®æˆ–è€…å”¯ä¸€*/
 	userPassword varchar(100) NOT NULL,
 	userPower varchar(100) NOT NULL,
-	primary key(userId)
+	primary key(userId),
+	
+	/*åŒ¹é…ä¿¡æ¯*/
+	pairId bigint NOT NULL,
+	pairUserId bigint NOT NULL,
+	moodValue varchar(100)/*è¿™é‡Œå­˜çš„æ˜¯å¯¹æ–¹çš„å¿ƒæƒ…*/
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert user(userName,userPassword,userPower) values("wbx","wbx","11111111");
+insert user values(NULL,"wbx","wbx","11111111",1,2,"æœªè®¾ç½®");
+insert user values(NULL,"lxz","lxz","11111111",1,1,"æœªè®¾ç½®");
+insert user(userName,userPassword,userPower,moodValue) values("ldm","ldm","00000000","æœªè®¾ç½®");
+insert user(userName,userPassword,userPower,moodValue) values("djm","djm","00000000","æœªè®¾ç½®");
 
+create table pair(
+	pairId bigint NOT NULL AUTO_INCREMENT,
+	user1Id bigint NOT NULL,
+	user2Id bigint NOT NULL,
+	pairDate datetime,
+	money bigint,
+	primary key(pairId)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+insert pair values(0,0,0,NULL,0);/*å¥½åƒä¸èµ·ä½œç”¨*/
+insert pair values(NULL,1,2,"2013-12-18 00:00:00",100);
+
+create table tempPair(
+	tempPairId bigint NOT NULL AUTO_INCREMENT,
+	userStartId bigint NOT NULL,
+	userEndId bigint NOT NULL,
+	remark varchar(100),
+	pairDate datetime,
+	primary key(tempPairId)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 /*
 create table product(
 	product_id bigint NOT NULL AUTO_INCREMENT,

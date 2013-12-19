@@ -7,6 +7,8 @@ class IndexAction extends Action
     {
     	$this->assign('View_SOFTNAME',_SOFTNAME);
     	$this->assign('View_VERSION',_VERSION);
+    	
+    	
     	$this->display();
 	}
 	
@@ -14,7 +16,7 @@ class IndexAction extends Action
 	{
 		if (session('?userName'))//如果用户已经存在
 		{
-			redirect(U('User/Index'),0);//不能写成$this->redirect(U('User/Index'),0);不然地址会变成：http://项目名a/模块名b/操作c/项目名a/模块名b/操作c/..
+			redirect(U('User/index'),0);//不能写成$this->redirect(U('User/index'),0);不然地址会变成：http://项目名a/模块名b/操作c/项目名a/模块名b/操作c/..
 		}
 	}
 	
@@ -38,10 +40,14 @@ class IndexAction extends Action
     	$result = $dbuser->where($condition)->select();
     	if($result)
     	{
+    		//设置session。session在toLogin和toSign中有设置
+    		session('_APPNAME',_SOFTNAME);
     		session('userName',$result[0]['userName']);
     		session('userPower',$result[0]['userPower']);
-    		//$this->success('登陆成功','__APP__/User/Index');
-    		$this->success('登陆成功',U('User/Index'));//U方法用于完成对URL地址的组装，特点在于可以自动根据当前的URL模式和设置生成对应的URL地址
+    		session('userId',$result[0]['userId']);
+    		
+    		//$this->success('登陆成功','__APP__/User/index');
+    		$this->success('登陆成功',U('User/index'));//U方法用于完成对URL地址的组装，特点在于可以自动根据当前的URL模式和设置生成对应的URL地址
     	}
     	else
     	{
@@ -66,9 +72,38 @@ class IndexAction extends Action
 		}
 		else
 		{
+			session('_APPNAME',_SOFTNAME);
 			session('userName',$$dbUser->userName);//////////////////这里进行了session
 			session('userPower',$dbUser->userPower);
-			$this->success('注册成功',U('User/Index'));//U函数必须要指定具体操作，不然会出错（即,不能U('User')）
+			session('userId',$result[0]['userId']);
+			$this->success('注册成功',U('User/index'));//U函数必须要指定具体操作，不然会出错（即,不能U('User')）
 		}
+	}
+	
+	public function logout()//安全退出
+	{
+		//判断session是否存在
+		if (!session('?userName'))
+		{
+			$this->error('非法登录',U('Index/login'));
+		}
+	
+		//删除session
+		session('userName',null);
+		session('userPower',null);
+		session('_APPNAME',null);
+		session('userId',null);
+		session('moodValue',null);
+		
+		//再次判断session是否存在
+		if ( (session('?userName')) || (session('?userPower')) || (session('?userId')) )
+			$this->error('退出失败');
+		else
+			$this->success('退出成功',U('Index/index'));////////////////////////////////////////////////////////
+	}
+	
+	public function help()
+	{
+		redirect(U('@www.co8bit.com'),0);
 	}
 }
