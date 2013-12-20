@@ -94,6 +94,7 @@ class IndexAction extends Action
 		session('_APPNAME',null);
 		session('userId',null);
 		session('moodValue',null);
+		session("toUserIndex",null);
 		
 		//再次判断session是否存在
 		if ( (session('?userName')) || (session('?userPower')) || (session('?userId')) )

@@ -33,10 +33,11 @@ create table pair(
 	pairDate datetime,
 	money bigint,
 	lowId bigint,
-	billContent LONGTEXT,/*存着数据如billId.分隔符.billId……*/
+	billContent LONGTEXT NOT NULL,/*存着数据,如billId.分隔符.billId……*/
+	tempBillContent LONGTEXT NOT NULL,/*存着还没有确认的账单数据，如billId.分隔符.billId……*/
 	primary key(pairId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1,NULL);/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
+insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1,"","");/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
 
 create table tempPair(
 	tempPairId bigint NOT NULL AUTO_INCREMENT,
@@ -61,5 +62,7 @@ create table bill(
 	billId bigint NOT NULL AUTO_INCREMENT,
 	remark LONGTEXT,
 	money int,
-	primary key(lowId)
+	isAdd boolean,
+	billTime date,
+	primary key(billId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;

@@ -65,8 +65,33 @@
 	<div class="login2">
 		<div class="login-screen">
 			<div class="login-icon">
-				<img src="__TMPL__FlatUI/images/icons/svg/gift-box.svg">
+				<img src="images/icons/svg/chat.svg">
 				<h4>{$Think.session._APPNAME}<small>加分订单</small></h4>
+			</div>
+			
+			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/verifyTempCon')}" >
+				<div class="login-form">
+					<b><font color="#000000"><center>加分订单</center></font></b>
+					<div class="form-group">
+						<input class="form-control login-field" placeholder="进账金额：如20" id="pairUserName" name="pairUserName" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+						<div class="form-group">
+						<input class="form-control login-field"  placeholder="进账理由：如有你陪伴很开心" id="login-pass" type="text" name="remark">
+						<label class="login-field-icon fui-mail" for="login-pass"></label>
+					</div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
+					<a class="btn btn-primary btn-lg btn-block" href="{:U('User/ignoreTempPair')}">返回</a>
+					<a class="login-link" href="#">对方确定账单后即生效</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="images/icons/svg/mail.svg">
+				<h4>{$Think.session._APPNAME}<small>减分订单</small></h4>
 			</div>
 			
 			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/verifyTempCon')}" >

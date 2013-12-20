@@ -146,6 +146,12 @@ class UserAction extends Action
 			redirect(U('User/treaty'),0);
 		}
 		
+		$dbBill = D("Bill");
+		$dbBill->init(session("pairId"));
+		
+		$data = $dbBill->getTempBillContent();
+		
+		$this->assign('View_messageCount',count($data));
 		$this->assign('View_currency',_CURRENCY);
 		$this->assign('View_money',$money);
 		
@@ -183,17 +189,27 @@ class UserAction extends Action
 		$this->display();
 	}
 	
-	public function toAdd()
+	public function toAdd()//与toSub对称
 	{
 		$dbBill = D("Bill");
-		$dbBill 
+		$dbBill->init(session("pairId"));
+		
+		$this->isOk(-1,$dbBill->insertTempBill(true),"转账申请成功，等待对方确认","User/index","转账错误，请重试","User/add");
 	}
 	
 	public function sub()
 	{
-		
+		$this->display();
 	}
-
+	
+	public function toSub()//与toAdd对称
+	{
+		$dbBill = D("Bill");
+		$dbBill->init(session("pairId"));
+		
+		$this->isOk(-1,$dbBill->insertTempBill(false),"扣除申请成功，等待对方确认","User/index","转账错误，请重试","User/sub");
+	}
+	
 	public function friend()
 	{
 		$this->display();
@@ -370,7 +386,49 @@ class UserAction extends Action
 	
 	public function message()//新消息
 	{
+		$dbBill = D("Bill");
+		$dbBill->init(session("pairId"));
+
+		$data = $dbBill->getTempBillContent();
+
+		$count = count($data);
+		for ($i = 0; $i < $count; $i++)
+		{
+			if ($data[$i]["isAdd"] == true)
+			{
+				$output[$i]["messageTitle"] = "加分订单";
+				$output[$i]["messageTitlePic"] = "chat";
+				$output[$i]["money"] = $data[$i]["money"];
+			}
+			else
+			{
+				$output[$i]["messageTitle"] = "减分订单";
+				$output[$i]["messageTitlePic"] = "mail";
+				$output[$i]["money"] = 0 - $data[$i]["money"];
+			}
+			$output[$i]["remark"] = $data[$i]["remark"];
+			$output[$i]["mId"] = $data[$i]["billId"];
+		}
 		
+		$this->assign("list",$output);
+		$this->display();
+	}
+	
+	public function editMessage()
+	{
+		$dbBill = D("Bill");
+		$dbBill->init(session("pairId"));
+		
+		$this->isOk(-1,$dbBill->updateTempBill($this->_post("mId")),"修改成功","User/message","修改错误，请重试","User/message");
+	}
+	
+	public function acceptMessage()
+	{
+		$dbBill = D("Bill");
+		$dbBill->init(session("pairId"));
+		
+		//$dbBill->acceptTempBill($this->_get("id"));
+		$this->isOk(-1,$dbBill->acceptTempBill($this->_get("id")),"确认成功","User/message","确认错误，请重试","User/message");
 	}
 	
 	public function note()//重要提醒
@@ -399,8 +457,10 @@ class UserAction extends Action
 			//更新pair的lowId
 			$dbPair = D("Pair");
 			$this->isFalse(-1,$dbPair->updateLowId(session("pairId"),$lowId),"读取爱情条约错误，请重新登录","Index/logout");
-		}
 		
+			session("toUserIndex",1);//设置是否第一次到这里
+		}
+
 		$dbLow = D("Low");
 		$dbLow->init(session("pairId"),$lowId);
 		$list = $dbLow->getContentAndScore();
@@ -517,7 +577,13 @@ class UserAction extends Action
 		 * 不然会出现count($data)范围和条约项的键值不匹配的情况(因为data的下标是select[i])
 		*/
 		$this->isFalse(-1,$dbLow->updateRecord($data,count($list)),"更新失败，请重试","User/treaty");
-		$this->isOk(0,true,0,"User/treaty",0,"User/treaty");
+		if (session('?toUserIndex'))
+		{
+			session('toUserIndex',null);
+			$this->isOk(0,true,0,"User/index",0,"User/treaty");
+		}
+		else
+			$this->isOk(0,true,0,"User/treaty",0,"User/treaty");
 	}
 	
 	public function newTreaty()//添加新条约的处理

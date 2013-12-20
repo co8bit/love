@@ -93,12 +93,12 @@
 			<h4><?php echo (session('_APPNAME')); ?><small>加分订单</small></h4>
 		</div>
 		
-		<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/verifyTempCon');?>" >
+		<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toAdd');?>" >
 			<div class="login-form">
 				<b><font color="#000000"><center>加分订单</center></font></b>
 				<font color="#000000"><p>转账金额：</font>
 				<div class="form-group">
-					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="pairUserName" type="text">
+					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="money" type="text">
 					<label class="login-field-icon fui-user" for="login-name"></label>
 				</div>
 				<font color="#000000"><p>转账理由：</font>
@@ -107,7 +107,7 @@
 					<label class="login-field-icon fui-mail" for="login-pass"></label>
 				</div>
 				<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
-				<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/ignoreTempPair');?>">返回</a>
+				<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
 				<a class="login-link" href="#">对方确定账单后即生效</a>
 			</div>
 		</form>

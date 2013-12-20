@@ -86,62 +86,40 @@
 
 		    
 
+<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "您没有未处理的消息" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="__TMPL__FlatUI/images/icons/svg/<?php echo ($vo["messageTitlePic"]); ?>.svg">
+				<h4><?php echo (session('_APPNAME')); ?><small><?php echo ($vo["messageTitle"]); ?></small></h4>
+			</div>
+			
+			<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/editMessage');?>" >
+				<div class="login-form">
+					<input type="hidden" name="mId"  value=<?php echo ($vo["mId"]); ?>>
+					<b><font color="#000000"><center><?php echo ($vo["messageTitle"]); ?></center></font></b>
+					<font color="#000000">金额：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo ($vo["money"]); ?>"  id="pairUserName" name="money" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+					<font color="#000000">理由：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo ($vo["remark"]); ?>"  id="login-pass" type="text" name="remark">
+						<label class="login-field-icon fui-mail" for="login-pass"></label>
+					</div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">修改</button>
+					<a class="btn btn-primary btn-lg btn-block" href="__APP__/User/acceptMessage?id=<?php echo ($vo["mId"]); ?>">确认</a>
+					<a class="login-link" href="#">对方确定账单后即生效</a>
+				</div>
+			</form>
+		</div>
+	</div><?php endforeach; endif; else: echo "您没有未处理的消息" ;endif; ?>
 <div class="row demo-row">
-	<div class="col-md-6">
-		<a href="<?php echo U('User/add');?>" class="btn btn-block btn-lg btn-info">加分订单</a>
-	</div>
-	<div class="col-md-6">
-		<a href="<?php echo U('User/sub');?>" class="btn btn-block btn-lg btn-inverse">减分订单</a>
-	</div>
-</div> <!-- /row -->
-	
-	
-<div class="demo-headline">
-	<h1 class="demo-logo">
-		<div class="logo"></div>
-		<?php echo ($View_money); ?>
-		<small><?php echo ($View_currency); ?></small>
-	</h1>
-</div> <!-- /demo-headline -->
-
-<div class="row demo-tiles">
-	<div class="col-md-3">
-		<div class="tile">
-			<a href="<?php echo U('User/message');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/chat.svg" alt="Chat" class="tile-image">
-			</a>
-			<h3 class="tile-title">新消息</h3>
-			<p>您有<b><?php echo ($View_messageCount); ?></b>条未处理的消息</p>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="tile">
-			<a href="<?php echo U('User/note');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/clocks.svg" alt="Chat" class="tile-image">
-			</a>
-			<h3 class="tile-title">重要提醒</h3>
-			<p>您今天有3项待处理事宜</p>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="tile">
-			<a href="<?php echo U('User/treaty');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/clipboard.svg" alt="Chat" class="tile-image">
-			</a>
-			<h3 class="tile-title">爱情条约</h3>
-			<p>本月盈利30爱情币</p>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="tile">
-			<a href="<?php echo U('User/diary');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/book.svg" alt="Chat" class="tile-image">
-			</a>
-			<h3 class="tile-title">爱情账户明细</h3>
-			<p>厚度超过80%的人</p>
-		</div>
+	<div class="col-md-12">
+		<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
 	</div>
 </div>
+
 		
 	</div> <!-- /container -->
 
