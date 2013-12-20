@@ -62,56 +62,32 @@
 			</div>
 		</div>
 	
-	<form class="form-signin" id="login" name="login" method="post" action="{:U('User/toAccount')}" >
-		<div class="row demo-row">
-			<h2><center>选择条约</center></h2>
-			<div class="col-md-6">
-				<label class="checkbox" for="checkbox1">
-					<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-					<input value="" id="checkbox1" data-toggle="checkbox" type="checkbox">
-					Unchecked
-				</label>
-				<label class="checkbox checked" for="checkbox2">
-					<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-					<input value="" id="checkbox2" data-toggle="checkbox" type="checkbox">
-					Checked
-				</label>
+	<div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="__TMPL__FlatUI/images/icons/svg/gift-box.svg">
+				<h4>{$Think.session._APPNAME}<small>加分订单</small></h4>
 			</div>
-			<div class="col-md-6">
-				<label class="checkbox" for="checkbox1">
-					<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-					<input value="" id="checkbox1" data-toggle="checkbox" type="checkbox">
-					Unchecked
-				</label>
-				<label class="checkbox checked" for="checkbox2">
-					<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-					<input value="" id="checkbox2" data-toggle="checkbox" type="checkbox">
-					Checked
-				</label>
-			</div>
-			<button class="btn btn-info btn-lg btn-block" type="submit">完成</button>
+			
+			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/verifyTempCon')}" >
+				<div class="login-form">
+					<b><font color="#000000"><center>加分订单</center></font></b>
+					<div class="form-group">
+						<input class="form-control login-field" placeholder="进账金额：如20" id="pairUserName" name="pairUserName" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+						<div class="form-group">
+						<input class="form-control login-field"  placeholder="进账理由：如有你陪伴很开心" id="login-pass" type="text" name="remark">
+						<label class="login-field-icon fui-mail" for="login-pass"></label>
+					</div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
+					<a class="btn btn-primary btn-lg btn-block" href="{:U('User/ignoreTempPair')}">返回</a>
+					<a class="login-link" href="#">对方确定账单后即生效</a>
+				</div>
+			</form>
 		</div>
-	</form>
-	<form class="form-signin" id="login2" name="login2" method="post" action="{:U('User/toAccount')}" >
-		<div class="row demo-row">
-			<h3 class="demo-panel-title">添加条约</h3>
-			<div class="col-md-8">
-				<div class="form-group">
-					<input class="form-control login-field" id="login-id" name="userId" type="text">
-				</div>
-			</div>
-			<div class="col-md-2">
-				<div class="form-group">
-					<input class="form-control login-field" id="login-id" name="userId" type="text">
-				</div>
-			</div>
-			<div class="col-md-2">
-				<div class="form-group">
-					<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
-				</div>
-			</div>
-		</div>
-	</form>
+	</div>
+	
 </div> <!-- /container -->
 		
 		

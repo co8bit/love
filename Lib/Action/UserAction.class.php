@@ -180,7 +180,13 @@ class UserAction extends Action
 	
 	public function add()
 	{
-		
+		$this->display();
+	}
+	
+	public function toAdd()
+	{
+		$dbBill = D("Bill");
+		$dbBill 
 	}
 	
 	public function sub()
@@ -396,46 +402,12 @@ class UserAction extends Action
 		}
 		
 		$dbLow = D("Low");
-		$dbLow->getContentAndScore($lowId);
-		$content = $dbLow->getContent();
-		$score = $dbLow->getScore();
-		
-		//解析content
-		$st = 0;
-		$count = 0;
-		$contentLen = strlen($content);
-		$list = NULL;
-		while ($st < $contentLen)
-		{
-			$breakPoint = strpos($content,_SPECIAL_END_FLAG,$st);
-			if (!$breakPoint)//到字符串最后一个内容了
-			{
-				$list[$count]["content"] = substr($content,$st);
-				break;
-			}
-			$list[$count]["content"] = substr($content,$st,$breakPoint - $st);
-			$count++;
-			$st = $breakPoint + _SPECIAL_END_FLAG_STRLEN;
-		}
-		
-		//解析score
-		$st = 0;
-		$count = 0;
-		$scoreLen = strlen($score);
-		while ($st < $scoreLen)
-		{
-			$breakPoint = strpos($score,_SPECIAL_END_FLAG,$st);
-			if (!$breakPoint)//到字符串最后一个内容了
-			{
-				$list[$count]["score"] = substr($score,$st);
-				break;
-			}
-			$list[$count]["score"] = substr($score,$st,$breakPoint - $st);
-			$count++;
-			$st = $breakPoint + _SPECIAL_END_FLAG_STRLEN;
-		}
+		$dbLow->init(session("pairId"),$lowId);
+		$list = $dbLow->getContentAndScore();
 		
 		/*
+		 * 这段代码是条约显示时，先显示左边，后显示右边的代码
+		 * 
 		//$count+1才是数量
 		if ( ($count == 0) && ($list == NULL) )
 		{
@@ -468,19 +440,23 @@ class UserAction extends Action
 		//输出
 		$this->assign('list1',$leftList);//左边
 		$this->assign('list2',$rightList);//右边
-		*/
-		for ($i = 0; $i < $leftLen; $i++)
-		{
-		$leftList[$i] = $list[$i]["content"]._SELECT_CONTENT_BREAK_FLAG.$list[$i]["score"]._CURRENCY."，没做到-".$list[$i]["score"]._CURRENCY;
-		}
-		
 		$this->assign('leftLen',$leftLen);//中断点
+		*/
+		$count = count($list);
+		for ($i = 0; $i < $count; $i++)
+		{
+			$outputList[$i] = $list[$i]["content"]._SELECT_CONTENT_BREAK_FLAG.$list[$i]["score"]._CURRENCY."，没做到-".$list[$i]["score"]._CURRENCY;
+		}
+		$this->assign('list',$outputList);
 		
 		$this->display();
 	}
 	
 	public function selectTreaty()//选择条约
 	{
+		/*
+		 * 下面这段代码是根据value的值进行解析select[]，这样做会导致顺序不确定
+		 *
 		$select = $this->_post("select");
 		$selectCount = count($select);
 		$data = NULL;
@@ -506,19 +482,53 @@ class UserAction extends Action
 		$dbLow = D("Low");
 		$this->isFalse(-1,$dbLow->updateRecord(session("pairId"),$data),"更新失败，请重试","User/treaty");
 		$this->isOk(0,true,0,"User/treaty",0,"User/treaty");
+		*/
+		
+		
+		/*
+		 * 这里是根据数据库解析select[]，即value的值是数字
+		 */
+		
+		//取出条约
+		$data = NULL;
+		$dbLow = D("Low");
+		$dbLow->init(session("pairId"));
+		$list = $dbLow->getContentAndScore();
+		
+		$select = $this->_post("select");
+		$selectCount = count($select);
+		for ($i = 0; $i < $selectCount; $i++)
+		{
+			$data[$select[$i]] = $list[$select[$i]];
+			if (_DEBUG)
+			{
+				echo $select[$i];
+			}
+		}
+		ksort($data,SORT_NUMERIC);//$select[$i]是乱序，导致顺序不对，但是key值的顺序即是当前顺序
+		if (_DEBUG)
+		{
+			dump($data);
+		}
+		
+		//更新条约
+		/*
+		 * //因为data是在list范围内组装的，所以必须传list的范围,
+		 * 不然会出现count($data)范围和条约项的键值不匹配的情况(因为data的下标是select[i])
+		*/
+		$this->isFalse(-1,$dbLow->updateRecord($data,count($list)),"更新失败，请重试","User/treaty");
+		$this->isOk(0,true,0,"User/treaty",0,"User/treaty");
 	}
 	
 	public function newTreaty()//添加新条约的处理
 	{
-		$dbUser = D("User");//要对UserModel实例化只能通过D操作
-		$lowId = $dbUser->getUserLowId(session("pairId"));
-		
 		$dbLow = D("Low");
-		$dbLow->getContentAndScore($lowId);
-		$content = $dbLow->getContent();
-		$score = $dbLow->getScore();
+		$dbLow->init(session("pairId"));
+		
+		$content = $dbLow->getOriginContent();
+		$score = $dbLow->getOriginScore();
 		$data = NULL;
-		$data["lowId"] = $lowId;
+		$data["lowId"] = $dbLow->getLowId();
 		$data["content"] = $content._SPECIAL_END_FLAG.$this->_post("content"); //默认最后一条尾部没有结束标志
 		$data["score"] = $score._SPECIAL_END_FLAG.$this->_post("score");
 		$this->isOk(0,$dbLow->save($data),0,"User/treaty",0,"User/treaty");

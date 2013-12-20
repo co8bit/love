@@ -33,9 +33,10 @@ create table pair(
 	pairDate datetime,
 	money bigint,
 	lowId bigint,
+	billContent LONGTEXT,/*存着数据如billId.分隔符.billId……*/
 	primary key(pairId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1);/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
+insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1,NULL);/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
 
 create table tempPair(
 	tempPairId bigint NOT NULL AUTO_INCREMENT,
@@ -53,3 +54,12 @@ create table low(
 	primary key(lowId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 insert low values (NULL,"一起去学习","5");
+UPDATE `love`.`low` SET `content` = '一起去自习@#$%^&*&^%$#@!$(&&$%^一起去吃饭@#$%^&*&^%$#@!$(&&$%^每天打电话@#$%^&*&^%$#@!$(&&$%^打电话超过一个小时@#$%^&*&^%$#@!$(&&$%^发短信慢@#$%^&*&^%$#@!$(&&$%^有话说@#$%^&*&^%$#@!$(&&$%^一起学英语@#$%^&*&^%$#@!$(&&$%^不凶对方' WHERE `low`.`lowId` =1;
+UPDATE `love`.`low` SET `score` = '5@#$%^&*&^%$#@!$(&&$%^23@#$%^&*&^%$#@!$(&&$%^10@#$%^&*&^%$#@!$(&&$%^5@#$%^&*&^%$#@!$(&&$%^5@#$%^&*&^%$#@!$(&&$%^5@#$%^&*&^%$#@!$(&&$%^3@#$%^&*&^%$#@!$(&&$%^5' WHERE `low`.`lowId` =1;
+
+create table bill(
+	billId bigint NOT NULL AUTO_INCREMENT,
+	remark LONGTEXT,
+	money int,
+	primary key(lowId)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;

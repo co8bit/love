@@ -1,5 +1,5 @@
 <?php
-class LowModel extends Model {
+class BillModel extends Model {
 
 	private $content = -1;//原样本
 	private $score = -1;//原样本
@@ -24,7 +24,7 @@ class LowModel extends Model {
 		$this->outputData["lowId"] = $this->lowId;
 	}
 	
-	public function getOriginContentAndScore()
+	public function getOriginBill()
 	{
 		$result = NULL;
 		$result = $this->where("lowId=$this->lowId")->select();
@@ -32,15 +32,6 @@ class LowModel extends Model {
 			return -1;
 		$this->content = $result[0]["content"];
 		$this->score = $result[0]["score"];
-	}
-	
-	public function getOriginContent()
-	{
-		if ($this->content === -1)
-		{
-			$this->getOriginContentAndScore();
-		}
-		return $this->content;
 	}
 	
 	public function getOriginScore()

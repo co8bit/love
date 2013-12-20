@@ -86,58 +86,33 @@
 
 		    
 
-<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/selectTreaty');?>" >
-	<div class="row demo-row">
-		<h2><center>选择条约</center></h2>
-		<div class="col-md-6">
-			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "0"): ?><!-- 0是奇数 -->
-					<label class="checkbox checked" for="checkbox2">
-						<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-						<input checked="checked" value="<?php echo ($i-1); ?>" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
-						<?php echo ($vo); ?>
-					</label><?php endif; endforeach; endif; else: echo "没有数据" ;endif; ?>
+<div class="login2">
+	<div class="login-screen">
+		<div class="login-icon">
+			<img src="__TMPL__FlatUI/images/icons/svg/gift-box.svg">
+			<h4><?php echo (session('_APPNAME')); ?><small>加分订单</small></h4>
 		</div>
-		<div class="col-md-6">
-			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): ?><label class="checkbox checked" for="checkbox2">
-						<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-						<input checked="checked" value="<?php echo ($i-1); ?>" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
-						<?php echo ($vo); ?>
-					</label><?php endif; endforeach; endif; else: echo "" ;endif; ?>
-		</div>
-	</div>
-	<div class="row demo-row">
-		<div class="col-md-2">
-		</div>
-		<div class="col-md-8">
-			<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
-		</div>
-	</div>
-</form>
-<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/newTreaty');?>" >
-	<div class="row demo-row">
-		<h3 class="demo-panel-title">添加条约</h3>
-		<div class="col-md-7">
-			第一步，请输入条款：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="例如：一起去自习室" name="content" type="text">
+		
+		<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/verifyTempCon');?>" >
+			<div class="login-form">
+				<b><font color="#000000"><center>加分订单</center></font></b>
+				<font color="#000000"><p>转账金额：</font>
+				<div class="form-group">
+					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="pairUserName" type="text">
+					<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+				<font color="#000000"><p>转账理由：</font>
+				<div class="form-group">
+					<input class="form-control login-field"  placeholder="如：有你陪伴很开心" id="login-pass" type="text" name="remark">
+					<label class="login-field-icon fui-mail" for="login-pass"></label>
+				</div>
+				<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
+				<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/ignoreTempPair');?>">返回</a>
+				<a class="login-link" href="#">对方确定账单后即生效</a>
 			</div>
-		</div>
-		<div class="col-md-3">
-			第二步，奖惩爱情币：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="例如：5" name="score" type="text">
-			</div>
-		</div>
-		<div class="col-md-2">
-			第三步
-			<div class="form-group">
-				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
-			</div>
-		</div>
-		<a class="login-link" href="#">说明：“奖惩爱情币”一栏只需输入数字即可。如若没做到则扣除相应数量的爱情币，如若做到则会有相应数量的爱情币进账。</a>
+		</form>
 	</div>
-	<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-</form>
+</div>
 		
 	</div> <!-- /container -->
 

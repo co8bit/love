@@ -5,15 +5,33 @@
 		<h2><center>选择条约</center></h2>
 		<div class="col-md-6">
 			<volist name="list" id="vo" empty="没有数据" mod="2">
-				<eq name="mod" value="1">{$vo}</eq>
+				<eq name="mod" value="0"> <!-- 0是奇数 -->
+					<label class="checkbox checked" for="checkbox2">
+						<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+						<input checked="checked" value="{$i-1}" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
+						{$vo}
+					</label>
+				</eq>
 			</volist>
 		</div>
 		<div class="col-md-6">
 			<volist name="list" id="vo" mod="2">
-				<eq name="mod" value="0">{$vo}</eq>
+				<eq name="mod" value="1">
+					<label class="checkbox checked" for="checkbox2">
+						<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+						<input checked="checked" value="{$i-1}" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
+						{$vo}
+					</label>
+				</eq>
 			</volist>
 		</div>
-		<button class="btn btn-info btn-lg btn-block" type="submit">完成</button>
+	</div>
+	<div class="row demo-row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
+		</div>
 	</div>
 </form>
 <form class="form-signin" id="newPost" name="newPost" method="post" action="{:U('User/newTreaty')}" >
@@ -39,4 +57,5 @@
 		</div>
 		<a class="login-link" href="#">说明：“奖惩爱情币”一栏只需输入数字即可。如若没做到则扣除相应数量的爱情币，如若做到则会有相应数量的爱情币进账。</a>
 	</div>
+	<a class="btn btn-primary btn-lg btn-block" href="{:U('User/index')}">返回</a>
 </form>
