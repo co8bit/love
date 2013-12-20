@@ -62,6 +62,32 @@ class UserAction extends Action
 		}
 	}
 	
+	private function isFalse($time,$ok,$falseStr,$falseU)//当$ok为false时进行跳转
+	//参数分别为：跳转时间（-1为默认）、判断量、为假提示符，为假跳转U操作参数（字符串）,若没有跳转操作则传0
+	{
+		if ($time == -1)//默认跳转时间
+		{
+			if (!$ok)
+			{
+				if ($falseU === 0)
+					$this->error($falseStr);
+				else
+					$this->error($falseStr,U($falseU));
+			}
+		}
+		else//延时跳转
+		{
+			if (!$ok)
+			{
+				$this->assign('waitSecond',$time);
+				if ($falseU === 0)
+					$this->error($falseStr);
+				else
+					$this->error($falseStr,U($falseU));
+			}
+		}
+	}
+	
 	public function index()
 	{
 		$this->assign('waitSecond',135);
@@ -93,6 +119,7 @@ class UserAction extends Action
 		$result = $db->where($condition)->select();
 		if($result)
 		{
+			$lowId = $result[0]['lowId'];
 			$money = $result[0]['money'];
 		}
 		else
@@ -112,6 +139,11 @@ class UserAction extends Action
 		else
 		{
 			$this->error('登陆有问题，系统退出后请重新登录','__APP__/Index/logout');
+		}
+		
+		if ($lowId == 1)//用户还没有创建条约
+		{
+			redirect(U('User/treaty'),0);
 		}
 		
 		$this->assign('View_currency',_CURRENCY);
@@ -342,29 +374,154 @@ class UserAction extends Action
 	
 	public function treaty()//爱情条约
 	{
+		$dbUser = D("User");//要对UserModel实例化只能通过D操作
+		$lowId = $dbUser->getUserLowId(session("pairId"));
+		
+		if ($lowId == 1)//用户还没有创建条约
+		{
+			$dbLow = D("Low");
+			$result = $dbLow->where("lowId=1")->select();//拷贝内容
+			$this->isFalse(-1,$result,"读取爱情条约错误，请重新登录","Index/logout");
+			$lowId = $dbLow->insertLow($result);//插入一条新条约
+			$this->isFalse(-1,$lowId,"读取爱情条约错误，请重新登录","Index/logout");
+			
+			if (_DEBUG)
+			{
+				trace($result,"result");
+			}
+			
+			//更新pair的lowId
+			$dbPair = D("Pair");
+			$this->isFalse(-1,$dbPair->updateLowId(session("pairId"),$lowId),"读取爱情条约错误，请重新登录","Index/logout");
+		}
+		
+		$dbLow = D("Low");
+		$dbLow->getContentAndScore($lowId);
+		$content = $dbLow->getContent();
+		$score = $dbLow->getScore();
+		
+		//解析content
+		$st = 0;
+		$count = 0;
+		$contentLen = strlen($content);
+		$list = NULL;
+		while ($st < $contentLen)
+		{
+			$breakPoint = strpos($content,_SPECIAL_END_FLAG,$st);
+			if (!$breakPoint)//到字符串最后一个内容了
+			{
+				$list[$count]["content"] = substr($content,$st);
+				break;
+			}
+			$list[$count]["content"] = substr($content,$st,$breakPoint - $st);
+			$count++;
+			$st = $breakPoint + _SPECIAL_END_FLAG_STRLEN;
+		}
+		
+		//解析score
+		$st = 0;
+		$count = 0;
+		$scoreLen = strlen($score);
+		while ($st < $scoreLen)
+		{
+			$breakPoint = strpos($score,_SPECIAL_END_FLAG,$st);
+			if (!$breakPoint)//到字符串最后一个内容了
+			{
+				$list[$count]["score"] = substr($score,$st);
+				break;
+			}
+			$list[$count]["score"] = substr($score,$st,$breakPoint - $st);
+			$count++;
+			$st = $breakPoint + _SPECIAL_END_FLAG_STRLEN;
+		}
+		
+		/*
+		//$count+1才是数量
+		if ( ($count == 0) && ($list == NULL) )
+		{
+			$leftLen = 0;
+			$count = -1;
+		}
+		else
+		{
+			if ( ($count + 1) % 2 == 0)//能被2整除
+				$leftLen = ($count + 1) / 2;
+			else
+				$leftLen = ($count / 2) + 1;//让左边多
+		}
+		
+		if (_DEBUG)
+		{
+			trace($leftLen,"leftLen");
+			trace($count,"count");
+		}
+		
+		for ($i = 0; $i < $leftLen; $i++)
+		{
+			$leftList[$i] = $list[$i]["content"]._SELECT_CONTENT_BREAK_FLAG.$list[$i]["score"]._CURRENCY."，没做到-".$list[$i]["score"]._CURRENCY;
+		}
+		for ($i = $leftLen; $i <= $count; $i++)//count+1才是数量，所以要<=
+		{
+			$rightList[$i] = $list[$i]["content"]._SELECT_CONTENT_BREAK_FLAG.$list[$i]["score"]._CURRENCY."，没做到-".$list[$i]["score"]._CURRENCY;
+		}
+		
+		//输出
+		$this->assign('list1',$leftList);//左边
+		$this->assign('list2',$rightList);//右边
+		*/
+		for ($i = 0; $i < $leftLen; $i++)
+		{
+		$leftList[$i] = $list[$i]["content"]._SELECT_CONTENT_BREAK_FLAG.$list[$i]["score"]._CURRENCY."，没做到-".$list[$i]["score"]._CURRENCY;
+		}
+		
+		$this->assign('leftLen',$leftLen);//中断点
 		
 		$this->display();
 	}
 	
 	public function selectTreaty()//选择条约
 	{
+		$select = $this->_post("select");
+		$selectCount = count($select);
+		$data = NULL;
+		$data["content"] = "";
+		$data["score"] = "";
+		for ($i = 0; $i < $selectCount; $i++)
+		{
+			//解析被选中的条约内容
+			$breakPoint = strpos($select[$i],_SELECT_CONTENT_BREAK_FLAG);//内容后的中断符位置
+			$scoreBehindBreak = strpos($select[$i],_CURRENCY);//分数后的中断符位置
+			$scoreSt = $breakPoint + _SELECT_CONTENT_BREAK_FLAG_STRLEN;//分数的开始处
+			if ($data["content"] == "")
+				$data["content"] = substr($select[$i],0,$breakPoint);
+			else
+				$data["content"] = $data["content"] . _SPECIAL_END_FLAG . substr($select[$i],0,$breakPoint);
+			if ($data["score"] == "")
+				$data["score"] = substr($select[$i],$scoreSt,$scoreBehindBreak - $scoreSt);
+			else
+				$data["score"] = $data["score"] . _SPECIAL_END_FLAG . substr($select[$i],$scoreSt,$scoreBehindBreak - $scoreSt);
+		}
 		
+		//更新条约	
+		$dbLow = D("Low");
+		$this->isFalse(-1,$dbLow->updateRecord(session("pairId"),$data),"更新失败，请重试","User/treaty");
+		$this->isOk(0,true,0,"User/treaty",0,"User/treaty");
 	}
 	
 	public function newTreaty()//添加新条约的处理
 	{
-		$dbUser = M("User");
+		$dbUser = D("User");//要对UserModel实例化只能通过D操作
 		$lowId = $dbUser->getUserLowId(session("pairId"));
 		
-		$dbLow = M("Low");
+		$dbLow = D("Low");
 		$dbLow->getContentAndScore($lowId);
-		$content = $dbLow->content;
-		$score = $dbLow->score;
+		$content = $dbLow->getContent();
+		$score = $dbLow->getScore();
 		$data = NULL;
 		$data["lowId"] = $lowId;
 		$data["content"] = $content._SPECIAL_END_FLAG.$this->_post("content"); //默认最后一条尾部没有结束标志
 		$data["score"] = $score._SPECIAL_END_FLAG.$this->_post("score");
-		$dbLow->save($data);
+		$this->isOk(0,$dbLow->save($data),0,"User/treaty",0,"User/treaty");
 	}
 	
 	public function diary()//爱情日记

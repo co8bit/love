@@ -35,7 +35,7 @@ create table pair(
 	lowId bigint,
 	primary key(pairId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1);/*默认lowId=1*/
+insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1);/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
 
 create table tempPair(
 	tempPairId bigint NOT NULL AUTO_INCREMENT,
@@ -52,3 +52,4 @@ create table low(
 	score LONGTEXT,
 	primary key(lowId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
+insert low values (NULL,"一起去学习","5");

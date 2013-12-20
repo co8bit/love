@@ -86,46 +86,35 @@
 
 		    
 
-<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/selectTreaty');?>" >
-	<div class="row demo-row">
-		<h2><center>选择条约</center></h2>
-		<div class="col-md-6">
-			<?php if(is_array($list1)): $i = 0; $__LIST__ = $list1;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(is_array($list1)): $i = 0; $__LIST__ = $list1;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): echo ($vo); endif; endforeach; endif; else: echo "没有数据" ;endif; endforeach; endif; else: echo "" ;endif; ?>
+<div class="container">
+	<div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="__TMPL__FlatUI/images/login/icon.png" alt="Welcome to Mail App">
+				<h4><?php echo (session('_APPNAME')); ?><small>关联另一半</small></h4>
+			</div>
+			
+			<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toPing');?>" >
+				<div class="login-form">
+					<b><font color="#000000"><center>使用之前需先与另一半账户关联</center></font></b>
+					<div class="form-group">
+						<input class="form-control login-field" value="" placeholder="请输入对方账户名" id="login-name" name="userName" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+	
+					<div class="form-group">
+						<input class="form-control login-field" value="" placeholder="请输入验证信息，比如：我是.." id="login-pass" type="text" name="remark">
+						<label class="login-field-icon fui-mail" for="login-pass"></label>
+					</div>
+	
+					<button class="btn btn-primary btn-lg btn-block" type="submit">关联另一半</button>
+					<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('Index/help');?>">先看看教程</a>
+					<a class="login-link" href="#">对方需已在爱情银行开户</a>
+				</div>
+			</form>
 		</div>
-		<div class="col-md-6">
-			<?php if(is_array($list2)): $i = 0; $__LIST__ = $list2;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><label class="checkbox checked" for="checkbox2">
-					<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-					<input checked="checked" value="<?php echo ($vo); ?>" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
-					<?php echo ($vo); ?>
-				</label><?php endforeach; endif; else: echo "" ;endif; ?>
-		</div>
-		<button class="btn btn-info btn-lg btn-block" type="submit">完成</button>
 	</div>
-</form>
-<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/newTreaty');?>" >
-	<div class="row demo-row">
-		<h3 class="demo-panel-title">添加条约</h3>
-		<div class="col-md-7">
-			第一步，请输入条款：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="例如：一起去自习室" name="content" type="text">
-			</div>
-		</div>
-		<div class="col-md-3">
-			第二步，奖惩爱情币：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="例如：5" name="score" type="text">
-			</div>
-		</div>
-		<div class="col-md-2">
-			第三步
-			<div class="form-group">
-				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
-			</div>
-		</div>
-		<a class="login-link" href="#">说明：“奖惩爱情币”一栏只需输入数字即可。如若没做到则扣除相应数量的爱情币，如若做到则会有相应数量的爱情币进账。</a>
-	</div>
-</form>
+</div> <!-- /container -->
 		
 	</div> <!-- /container -->
 

@@ -20,19 +20,17 @@ class UserModel extends Model {
 			*/
 	);
 	
-	private $lowId = -1;
+	protected $lowId = -1;
 	
-	private function getUserLowId($id)
+	public function getUserLowId($id)
 	{
 		if ($this->lowId != -1)
-			return $$this->lowId;
+			return $this->lowId;
 		$dbPair = M("Pair");
 		$result = NULL;
 		$result = $dbPair->where("pairId=$id")->select();
 		if (!$result)//userName不存在
-		{
-			$this->error("获取条约失败");
-		}
+			return -1;
 		$this->lowId = $result[0]["lowId"];
 		return $this->lowId;
 	}
