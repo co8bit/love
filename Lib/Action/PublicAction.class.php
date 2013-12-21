@@ -1,5 +1,5 @@
 <?php
-include('.\Conf\MyConfigINI.php');
+include(CONF_PATH."MyConfigINI.php");
 
 class PublicAction extends Action
 {

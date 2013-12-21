@@ -1,5 +1,5 @@
 <?php
-include('.\Conf\MyConfigINI.php');
+include(CONF_PATH."MyConfigINI.php");
 
 class IndexAction extends Action 
 {
@@ -7,7 +7,7 @@ class IndexAction extends Action
     {
     	$this->assign('View_SOFTNAME',_SOFTNAME);
     	$this->assign('View_VERSION',_VERSION);
-    	
+//     	echo CONF_PATH."MyConfigINI.php";
     	
     	$this->display();
 	}

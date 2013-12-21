@@ -14,6 +14,7 @@ return array(
 	
 	'SESSION_AUTO_START'    => true,    // 是否自动开启Session
 	
+	'TMPL_PARSE_STRING'=> array('__PUBLIC__' => '/love/Public'),//定义__PUBLIC__在哪里
 	//'TMPL_ACTION_ERROR'     => THINK_PATH.'Public:error', // 默认错误跳转对应的模板文件
 	//'TMPL_ACTION_SUCCESS'   => THINK_PATH.'Public:success', // 默认成功跳转对应的模板文件
 );

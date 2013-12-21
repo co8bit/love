@@ -6,17 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0", user-scalable=no>
 
 	<!-- Loading Bootstrap -->
-	<link href="__PUBLIC__/FlatUI/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="__TMPL__FlatUI/bootstrap/css/bootstrap.css" rel="stylesheet">
 
 	<!-- Loading Flat UI -->
-	<link href="__PUBLIC__/FlatUI/css/flat-ui.css" rel="stylesheet">
-	<link href="__PUBLIC__/FlatUI/css/demo.css" rel="stylesheet">
+	<link href="__TMPL__FlatUI/css/flat-ui.css" rel="stylesheet">
+	<link href="__TMPL__FlatUI/css/demo.css" rel="stylesheet">
 
-	<link rel="shortcut icon" href="__PUBLIC__/FlatUI/images/favicon.ico">
+	<link rel="shortcut icon" href="__TMPL__FlatUI/images/favicon.ico">
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 	<!--[if lt IE 9]>
-	  <script src="__PUBLIC__/FlatUI/js/html5shiv.js"></script>
+	  <script src="__TMPL__FlatUI/js/html5shiv.js"></script>
 	<![endif]-->
 </head>
 
@@ -86,33 +86,37 @@
 
 		    
 
-<div class="login2">
-	<div class="login-screen">
-		<div class="login-icon">
-			<img src="__PUBLIC__/FlatUI/images/icons/svg/gift-box.svg">
-			<h4><?php echo (session('_APPNAME')); ?><small>加分订单</small></h4>
-		</div>
-		
-		<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toAdd');?>" >
-			<div class="login-form">
-				<b><font color="#000000"><center>加分订单</center></font></b>
-				<font color="#000000"><p>转账金额：</font>
-				<div class="form-group">
-					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="money" type="text">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<font color="#000000"><p>转账理由：</font>
-				<div class="form-group">
-					<input class="form-control login-field"  placeholder="如：有你陪伴很开心" id="login-pass" type="text" name="remark">
-					<label class="login-field-icon fui-mail" for="login-pass"></label>
-				</div>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
-				<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-				<a class="login-link" href="#">对方确定账单后即生效</a>
+<div class="container">
+	<div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="__TMPL__FlatUI/images/login/icon.png" alt="Welcome to Mail App">
+				<h4><?php echo (session('_APPNAME')); ?><small>关联另一半</small></h4>
 			</div>
-		</form>
+			
+			<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/cancelTempCon');?>" >
+				<div class="login-form">
+					<b><font color="#000000"><center>等待对方确认ing</center></font></b>
+					<font color="#000000"><p>对方账户名：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo ($pairUserName); ?>" disabled="disabled" placeholder="请输入对方账户名" id="login-name" name="userName" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+					
+					<font color="#000000">验证信息：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo ($remark); ?>" disabled="disabled" placeholder="请输入验证信息" id="login-pass" type="text" name="remark">
+						<label class="login-field-icon fui-mail" for="login-pass"></label>
+					</div>
+					<font color="#000000"><center>赶紧通知TA同意吧，或者</center></font>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">撤销关联申请</button>
+					<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('Index/help');?>">先看看教程</a>
+					<a class="login-link" href="#">对方需已在爱情银行开户</a>
+				</div>
+			</form>
+		</div>
 	</div>
-</div>
+</div> <!-- /container -->
 		
 	</div> <!-- /container -->
 
@@ -127,7 +131,7 @@
 					  如果喜欢的话可以关注我们的微博：<a href="http://weibo.com/u/3947676737" target="_blank">新浪微博</a><br>
 					  您也可以赞助我们：
 						<a class="footer-brand" href="https://me.alipay.com/co8bit" target="_blank">
-							<img src="__PUBLIC__/FlatUI/images/donate_link.png" alt="donate_link">
+							<img src="__TMPL__FlatUI/images/donate_link.png" alt="donate_link">
 						</a>
 					</p>
 				</div> <!-- /col-md-7 -->
@@ -148,18 +152,18 @@
 	</footer>
 	
 	<!-- Load JS here for greater good =============================-->
-	<script src="__PUBLIC__/FlatUI/js/jquery-1.8.3.min.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/jquery-ui-1.10.3.custom.min.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/bootstrap.min.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/bootstrap-select.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/bootstrap-switch.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/flatui-checkbox.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/flatui-radio.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/jquery.tagsinput.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/jquery.placeholder.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/jquery.stacktable.js"></script>
+	<script src="__TMPL__FlatUI/js/jquery-1.8.3.min.js"></script>
+	<script src="__TMPL__FlatUI/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="__TMPL__FlatUI/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="__TMPL__FlatUI/js/bootstrap.min.js"></script>
+	<script src="__TMPL__FlatUI/js/bootstrap-select.js"></script>
+	<script src="__TMPL__FlatUI/js/bootstrap-switch.js"></script>
+	<script src="__TMPL__FlatUI/js/flatui-checkbox.js"></script>
+	<script src="__TMPL__FlatUI/js/flatui-radio.js"></script>
+	<script src="__TMPL__FlatUI/js/jquery.tagsinput.js"></script>
+	<script src="__TMPL__FlatUI/js/jquery.placeholder.js"></script>
+	<script src="__TMPL__FlatUI/js/jquery.stacktable.js"></script>
 	<script src="http://vjs.zencdn.net/4.1/video.js"></script>
-	<script src="__PUBLIC__/FlatUI/js/application.js"></script>
+	<script src="__TMPL__FlatUI/js/application.js"></script>
 </body>
 </html>

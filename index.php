@@ -1,4 +1,5 @@
 <?php
 define('APP_DEBUG',TRUE); 
 
-require( "../ThinkPHP/ThinkPHP.php");
+define('ENGINE_NAME','SAE');
+require '../ThinkPHP/ThinkPHP.php';

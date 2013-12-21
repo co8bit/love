@@ -6,17 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0", user-scalable=no>
 
 	<!-- Loading Bootstrap -->
-	<link href="__TMPL__FlatUI/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="__PUBLIC__/FlatUI/bootstrap/css/bootstrap.css" rel="stylesheet">
 
 	<!-- Loading Flat UI -->
-	<link href="__TMPL__FlatUI/css/flat-ui.css" rel="stylesheet">
-	<link href="__TMPL__FlatUI/css/demo.css" rel="stylesheet">
+	<link href="__PUBLIC__/FlatUI/css/flat-ui.css" rel="stylesheet">
+	<link href="__PUBLIC__/FlatUI/css/demo.css" rel="stylesheet">
 
-	<link rel="shortcut icon" href="__TMPL__FlatUI/images/favicon.ico">
+	<link rel="shortcut icon" href="__PUBLIC__/FlatUI/images/favicon.ico">
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 	<!--[if lt IE 9]>
-	  <script src="__TMPL__FlatUI/js/html5shiv.js"></script>
+	  <script src="__PUBLIC__/FlatUI/js/html5shiv.js"></script>
 	<![endif]-->
 </head>
 
@@ -108,7 +108,7 @@
 	<div class="col-md-3">
 		<div class="tile">
 			<a href="<?php echo U('User/message');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/chat.svg" alt="Chat" class="tile-image">
+				<img src="__PUBLIC__/FlatUI/images/icons/svg/chat.svg" alt="Chat" class="tile-image">
 			</a>
 			<h3 class="tile-title">新消息</h3>
 			<p>您有<b><?php echo ($View_messageCount); ?></b>条未处理的消息</p>
@@ -117,7 +117,7 @@
 	<div class="col-md-3">
 		<div class="tile">
 			<a href="<?php echo U('User/note');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/clocks.svg" alt="Chat" class="tile-image">
+				<img src="__PUBLIC__/FlatUI/images/icons/svg/clocks.svg" alt="Chat" class="tile-image">
 			</a>
 			<h3 class="tile-title">重要提醒</h3>
 			<p>您今天有3项待处理事宜</p>
@@ -126,7 +126,7 @@
 	<div class="col-md-3">
 		<div class="tile">
 			<a href="<?php echo U('User/treaty');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/clipboard.svg" alt="Chat" class="tile-image">
+				<img src="__PUBLIC__/FlatUI/images/icons/svg/clipboard.svg" alt="Chat" class="tile-image">
 			</a>
 			<h3 class="tile-title">爱情条约</h3>
 			<p>本月盈利30爱情币</p>
@@ -135,7 +135,7 @@
 	<div class="col-md-3">
 		<div class="tile">
 			<a href="<?php echo U('User/diary');?>">
-				<img src="__TMPL__FlatUI/images/icons/svg/book.svg" alt="Chat" class="tile-image">
+				<img src="__PUBLIC__/FlatUI/images/icons/svg/book.svg" alt="Chat" class="tile-image">
 			</a>
 			<h3 class="tile-title">爱情账户明细</h3>
 			<p>厚度超过80%的人</p>
@@ -156,7 +156,7 @@
 					  如果喜欢的话可以关注我们的微博：<a href="http://weibo.com/u/3947676737" target="_blank">新浪微博</a><br>
 					  您也可以赞助我们：
 						<a class="footer-brand" href="https://me.alipay.com/co8bit" target="_blank">
-							<img src="__TMPL__FlatUI/images/donate_link.png" alt="donate_link">
+							<img src="__PUBLIC__/FlatUI/images/donate_link.png" alt="donate_link">
 						</a>
 					</p>
 				</div> <!-- /col-md-7 -->
@@ -177,18 +177,18 @@
 	</footer>
 	
 	<!-- Load JS here for greater good =============================-->
-	<script src="__TMPL__FlatUI/js/jquery-1.8.3.min.js"></script>
-	<script src="__TMPL__FlatUI/js/jquery-ui-1.10.3.custom.min.js"></script>
-	<script src="__TMPL__FlatUI/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="__TMPL__FlatUI/js/bootstrap.min.js"></script>
-	<script src="__TMPL__FlatUI/js/bootstrap-select.js"></script>
-	<script src="__TMPL__FlatUI/js/bootstrap-switch.js"></script>
-	<script src="__TMPL__FlatUI/js/flatui-checkbox.js"></script>
-	<script src="__TMPL__FlatUI/js/flatui-radio.js"></script>
-	<script src="__TMPL__FlatUI/js/jquery.tagsinput.js"></script>
-	<script src="__TMPL__FlatUI/js/jquery.placeholder.js"></script>
-	<script src="__TMPL__FlatUI/js/jquery.stacktable.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/jquery-1.8.3.min.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/bootstrap-select.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/bootstrap-switch.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/flatui-checkbox.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/flatui-radio.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/jquery.tagsinput.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/jquery.placeholder.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/jquery.stacktable.js"></script>
 	<script src="http://vjs.zencdn.net/4.1/video.js"></script>
-	<script src="__TMPL__FlatUI/js/application.js"></script>
+	<script src="__PUBLIC__/FlatUI/js/application.js"></script>
 </body>
 </html>

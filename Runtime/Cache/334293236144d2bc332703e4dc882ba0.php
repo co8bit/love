@@ -1,6 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?>
-
-<html>
+<?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>爱情银行</title>
@@ -44,17 +42,20 @@
 
 <body>
 
-	<div class="hero-unit">
-	<h1 class="text-center"><?php echo ($View_SOFTNAME); ?></h1>
-	<p class="text-center">by co8bit <?php echo ($View_VERSION); ?></p>
-	<p align="center">
-		<a class="btn btn-primary btn-large" href="<?php echo U('Index/login');?>">
-		进入	</a>	
-	</p>
-	</div>
+    <div class="container">
 
+      <form class="form-signin" id="sign" name="sign" method="post" action="<?php echo U('Index/toSign');?>" >
+        <h2 class="form-signin-heading">注册</h2>
+        	用户名<input type="text" class="input-block-level"  name="userName">
+        	密码<input type="password" class="input-block-level" name="userPassword">
+        	再次输入密码<input type="password" class="input-block-level" name="userPassword2">
+        <button class="btn btn-large btn-primary" type="submit">注册</button>
+        <!-- TODO:返回首页功能 -->
+      </form>
 
+    </div> <!-- /container --> 
 
-<!-- Bootstrap -->    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+
 </body>
 </html>
