@@ -1,7 +1,8 @@
 <?php
 include(CONF_PATH."MyConfigINI.php");
+include(LIB_PATH."CommonAction.php");
 
-class IndexAction extends Action 
+class IndexAction extends CommonAction 
 {
     public function index()
     {

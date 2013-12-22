@@ -86,33 +86,35 @@
 
 		    
 
-<div class="login2">
-	<div class="login-screen">
-		<div class="login-icon">
-			<img src="__PUBLIC__/FlatUI/images/icons/svg/gift-box.svg">
-			<h4><?php echo (session('_APPNAME')); ?><small>加分订单</small></h4>
-		</div>
-		
-		<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toAdd');?>" >
-			<div class="login-form">
-				<b><font color="#000000"><center>加分订单</center></font></b>
-				<font color="#000000"><p>转账金额：</font>
-				<div class="form-group">
-					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="money" type="text">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<font color="#000000"><p>转账理由：</font>
-				<div class="form-group">
-					<input class="form-control login-field"  placeholder="如：有你陪伴很开心" id="login-pass" type="text" name="remark">
-					<label class="login-field-icon fui-mail" for="login-pass"></label>
-				</div>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
-				<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-				<a class="login-link" href="#">对方确定账单后即生效</a>
+<div class="container">
+	<div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="__PUBLIC__/FlatUI/images/login/icon.png" alt="Welcome to Mail App">
+				<h4><?php echo (session('_APPNAME')); ?><small>关联另一半</small></h4>
 			</div>
-		</form>
+			
+			<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toPing');?>" >
+				<div class="login-form">
+					<b><font color="#000000"><center>使用之前需先与另一半账户关联</center></font></b>
+					<div class="form-group">
+						<input class="form-control login-field" value="" placeholder="请输入对方账户名" id="login-name" name="userName" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+	
+					<div class="form-group">
+						<input class="form-control login-field" value="" placeholder="请输入验证信息，比如：我是.." id="login-pass" type="text" name="remark">
+						<label class="login-field-icon fui-mail" for="login-pass"></label>
+					</div>
+	
+					<button class="btn btn-primary btn-lg btn-block" type="submit">关联另一半</button>
+					<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('Index/help');?>">先看看教程</a>
+					<a class="login-link" href="#">对方需已在爱情银行开户</a>
+				</div>
+			</form>
+		</div>
 	</div>
-</div>
+</div> <!-- /container -->
 		
 	</div> <!-- /container -->
 

@@ -1,7 +1,8 @@
 <?php
 include(CONF_PATH."MyConfigINI.php");
+include(LIB_PATH."CommonAction.php");
 
-class UserAction extends Action
+class UserAction extends CommonAction
 {
 	private function isOk($time,$ok,$trueStr,$trueU,$falseStr,$falseU)//判读是否成功写入数据库
 	//参数分别为：跳转时间（-1为默认）、判断量、为真提示符、为真跳转U操作参数（字符串）、为假提示符，为假跳转U操作参数（字符串）,若没有跳转操作则传0
