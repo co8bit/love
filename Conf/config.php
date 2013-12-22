@@ -6,7 +6,7 @@ return array(
 	//主题相关
 	'DEFAULT_THEME' => 'PC',//设置默认主题为PC
 	'THEME_LIST'=>'PC,Mobile',//支持的模板主题项
-	'TMPL_DETECT_THEME' => 	true, // 自动侦测模板主题
+	//'TMPL_DETECT_THEME' => 	true, // 自动侦测模板主题
 		
 	// 数据库配置信息
 	'DB_TYPE'   => 'mysql', // 数据库类型
