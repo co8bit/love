@@ -58,13 +58,17 @@ class IndexAction extends CommonAction
 	
 	public function toSign()//判断是否注册成功
 	{
-		$this->assign('waitSecond',135);
+		//$this->assign('waitSecond',135);
 		
 		$dbUser = D("User");
 		//trace($fields = $dbUser->getDbFields(),"my output:");     //for debug
 		$dbUser->create();
-		
-		if(!$dbUser->add())//添加失败  TODO
+		$userName = $dbUser->userName;
+		$userPowere = $dbUser->userPowere;
+		$dbUser->userPower = "00000000";
+		$dbUser->moodValue = "未设置";
+		$userId = $dbUser->add();
+		if(!$userId)//添加失败  TODO
 		{
 			if ( $dbUser->getError() == '非法数据对象！')//! 号后面有个空格
 				$this->error('注册失败：'.'有未填项');
@@ -74,9 +78,9 @@ class IndexAction extends CommonAction
 		else
 		{
 			session('_APPNAME',_SOFTNAME);
-			session('userName',$$dbUser->userName);//////////////////这里进行了session
-			session('userPower',$dbUser->userPower);
-			session('userId',$result[0]['userId']);
+			session('userName',$userName);//////////////////这里进行了session
+			session('userPower',$userPowere);
+			session('userId',$userId);
 			$this->success('注册成功',U('User/index'));//U函数必须要指定具体操作，不然会出错（即,不能U('User')）
 		}
 	}

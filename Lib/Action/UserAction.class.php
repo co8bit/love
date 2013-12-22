@@ -91,7 +91,7 @@ class UserAction extends CommonAction
 	
 	public function index()
 	{
-		$this->assign('waitSecond',135);
+		//$this->assign('waitSecond',135);
 		
 		$dbuser = M("User");
 		$condition = NULL;
@@ -176,6 +176,7 @@ class UserAction extends CommonAction
 		$this->assign('View_currency',_CURRENCY);
 		$this->assign('View_money',$money);
 		$this->assign('View_target',$target);
+		$this->assign('View_noteCount',count($dbUser->getNoteContent()));
 		
 		$this->display();
 	}
@@ -349,6 +350,8 @@ class UserAction extends CommonAction
 		$data["user2Id"] = $pairUserId;
 		$data["pairDate"] = date("Y-m-d H:i:s");
 		$data["money"] = _INIT_MONEY;
+		$data["lowId"] = 1;
+		$data["targetId"] = 0;
 		if (!$dbPair->add($data))
 		{
 			$this->error("关联失败，请重试");

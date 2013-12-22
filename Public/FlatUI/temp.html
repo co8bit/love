@@ -21,11 +21,48 @@
 <body>
 
 	<div class="container">
-	
-	<label class="radio">
-            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input name="optionsRadios" id="optionsRadios1" value="option1" data-toggle="radio" type="radio">
-            Radio is off
-          </label>
+	<div class="row demo-row">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+			  <div class="navbar navbar-inverse navbar-fixed-top">
+			      <div class="navbar-inner">
+			        <div class="container-fluid">
+			          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
+			          <a class="brand" href="{:U('User/index')}">{$Think.session._APPNAME}</a>
+			          <div class="nav-collapse collapse">
+			            <p class="navbar-text pull-right">
+			            	 <a href="{:U('User/displayAddDiary')}">
+							写点滴
+						  </a>
+			            </p>
+			            <p class="navbar-text pull-right">
+			            	<a href="{:U('Index/logout')}">退出</a>
+			            </p>
+			            <ul class="nav">
+			              <li><a href="__URL__/main" class="btn dropdown-toggle data-toggle="dropdown" btn-small btn btn-inverse">首页 </a></li>
+			               <li><a href="__URL__/purchases" class="btn dropdown-toggle btn-small btn btn-inverse">进货单 </a></li>
+			               <li><a href="__URL__/sale" class="btn dropdown-toggle btn-small btn btn-inverse">销售单 </a></li>
+			               <li><a href="__URL__/inventory" class="btn dropdown-toggle btn-small btn btn-inverse">库存单 </a></li>
+			               <li><a href="__URL__/accountpayable" class="btn dropdown-toggle btn-small btn btn-inverse">应付款 </a></li>
+			               <li><a href="__URL__/accountdue" class="btn dropdown-toggle btn-small btn btn-inverse">应收款 </a></li>
+			               <li><a href="__URL__/finance" class="btn dropdown-toggle btn-small btn btn-inverse">财务</a></li>
+			               <li><a href="__URL__/staffmanage" class="btn dropdown-toggle btn-small btn btn-inverse">员工管理 </a></li>
+			               <li><a href="__URL__/user" class=" btn dropdown-toggle btn-small btn btn-inverse">账户管理 </a></li>
+			               <li><a href="__URL__/about" class=" btn dropdown-toggle btn-small btn btn-inverse">关于 </a></li>
+			            </ul>
+			          </div><!--/.nav-collapse -->
+			        </div>
+			      </div>
+			    </div>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
 	</div> <!-- /container -->
 
 		

@@ -7,7 +7,7 @@ Class CommonAction extends Action
 		if (ismobile()) 
 		{
 			//设置默认默认主题为 Mobile
-			//C('DEFAULT_THEME','Mobile');
+			C('DEFAULT_THEME','Mobile');
 		}
 		//............你的更多代码.......
 	}

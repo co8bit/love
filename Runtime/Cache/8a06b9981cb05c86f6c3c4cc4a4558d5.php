@@ -19,6 +19,47 @@
 	  <script src="__PUBLIC__/FlatUI/js/html5shiv.js"></script>
 	<![endif]-->
 </head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>爱情银行</title>
+<!-- Bootstrap -->   <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+   <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
+</head>
+
+
 
 <body>
 			  <!--    <dl class="palette palette-orange"> -->
@@ -26,61 +67,45 @@
 	<div class="container">
 	
 		<div class="row demo-row">
-			<div class="col-md-12">
-			  <div class="navbar navbar-inverse">
-				<div class="navbar-header">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
-				</div>            
-				<div class="navbar-collapse collapse navbar-collapse-01">
-					<ul class="nav navbar-nav navbar-left">
-						<li>
-						  <a href="<?php echo U('User/index');?>">
-							<?php echo (session('_APPNAME')); ?>
-						  </a>
-						</li>
-						<li>
-							<a href="#fakelink">
-								对方心情：<?php echo (session('moodValue')); ?>
-							</a>
-							<ul>
-								<li><a href="#fakelink">我的心情：<?php echo (session('myMoodValue')); ?></a></li>
-								<li>
-								  <a href="#fakelink">变更我的心情</a>
-								  <ul>
-									<li><a href="<?php echo U('User/changeMood?mood=幸福');?>">幸福</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=开心');?>">开心</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=郁闷');?>">郁闷</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=难过');?>">难过</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=生气');?>">生气</a></li>
-								  </ul> <!-- /Sub menu -->
-								</li>
-							</ul> <!-- /Sub menu -->
-						</li>
-						<li>
-						  <a href="<?php echo U('User/friend');?>">
-							好友圈
-							<span class="navbar-unread">1</span>
-						  </a>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-						  <a href="<?php echo U('User/displayAddDiary');?>">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+			  <div class="navbar navbar-inverse navbar-fixed-top">
+			      <div class="navbar-inner">
+			        <div class="container-fluid">
+			          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
+			          <a class="brand" href="<?php echo U('User/index');?>"><?php echo (session('_APPNAME')); ?></a>
+			          <div class="nav-collapse collapse">
+			            <p class="navbar-text pull-right">
+			            	 <a href="<?php echo U('User/displayAddDiary');?>">
 							写点滴
 						  </a>
-						</li>
-						<li class="active">
-							<a href="<?php echo U('User/account');?>">
-								<?php echo (session('userName')); ?>
-							</a>
-							<ul>
-								<li><a href="<?php echo U('User/account');?>">账户设置</a></li>
-								<li><a href="<?php echo U('Index/logout');?>">退出</a></li>
-							</ul> <!-- /Sub menu -->
-						</li>
-					</ul>
-				</div><!--/.nav -->
-			  </div>
+			            </p>
+			            <p class="navbar-text pull-right">
+			            	<a href="<?php echo U('Index/logout');?>">退出</a>
+			            </p>
+			            <ul class="nav">
+			              <li><a href="__URL__/main" class="btn dropdown-toggle data-toggle="dropdown" btn-small btn btn-inverse">首页 </a></li>
+			               <li><a href="__URL__/purchases" class="btn dropdown-toggle btn-small btn btn-inverse">进货单 </a></li>
+			               <li><a href="__URL__/sale" class="btn dropdown-toggle btn-small btn btn-inverse">销售单 </a></li>
+			               <li><a href="__URL__/inventory" class="btn dropdown-toggle btn-small btn btn-inverse">库存单 </a></li>
+			               <li><a href="__URL__/accountpayable" class="btn dropdown-toggle btn-small btn btn-inverse">应付款 </a></li>
+			               <li><a href="__URL__/accountdue" class="btn dropdown-toggle btn-small btn btn-inverse">应收款 </a></li>
+			               <li><a href="__URL__/finance" class="btn dropdown-toggle btn-small btn btn-inverse">财务</a></li>
+			               <li><a href="__URL__/staffmanage" class="btn dropdown-toggle btn-small btn btn-inverse">员工管理 </a></li>
+			               <li><a href="__URL__/user" class=" btn dropdown-toggle btn-small btn btn-inverse">账户管理 </a></li>
+			               <li><a href="__URL__/about" class=" btn dropdown-toggle btn-small btn btn-inverse">关于 </a></li>
+			            </ul>
+			          </div><!--/.nav-collapse -->
+			        </div>
+			      </div>
+			    </div>
+			</div>
+			<div class="col-md-1">
 			</div>
 		</div>
 
@@ -105,9 +130,6 @@
 					</li><?php endforeach; endif; else: echo "还没有日记，去创建吧" ;endif; ?>
 			</ul>
 		  </div>
-		  <p>
-		  <a class="btn btn-info btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-		  <p>
 		</div>
 	<div class="col-md-2">
 </div>
@@ -115,8 +137,7 @@
 	</div> <!-- /container -->
 
 	<!-- </dl> -->
-	
-	<footer>
+		<footer>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-7">
@@ -161,3 +182,5 @@
 	<script src="__PUBLIC__/FlatUI/js/application.js"></script>
 </body>
 </html>
+	
+<!-- Bootstrap -->    <script src="__PUBLIC__/js/bootstrap.min.js"></script>

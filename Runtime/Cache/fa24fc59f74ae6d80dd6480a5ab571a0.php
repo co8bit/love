@@ -86,31 +86,34 @@
 
 		    
 
-<div class="col-md-2">
-	</div>
-	<div class="col-md-8">
-		  <div class="todo">
-			<div class="todo-search">
-			  <input class="todo-search-field" value="" disabled="disabled" placeholder="爱情账户明细" type="search">
+<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/newTarget');?>" >
+	<div class="row demo-row">
+		<h2><center>设定奖励</center></h2>
+		
+		<div class="col-md-3">
+			第一步，输入条件：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="如：500" name="tiaojian" type="text">
 			</div>
-			<ul>
-				<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "还没有日记，去创建吧" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li class=<?php echo ($vo["gouxuan"]); ?>>
-						<div class=<?php echo ($vo["icon"]); ?>></div>
-						<div class="todo-content">
-							<h4 class="todo-name">
-								<?php echo ($vo["contant"]); ?>
-							</h4>
-								<?php echo ($vo["score"]); ?>
-						</div>
-					</li><?php endforeach; endif; else: echo "还没有日记，去创建吧" ;endif; ?>
-			</ul>
-		  </div>
-		  <p>
-		  <a class="btn btn-info btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-		  <p>
+			<a class="login-link" href="#">说明：比如要设定奖励：当爱情币达到500的时候一起去旅游。则本步骤输入“500”</a>
 		</div>
-	<div class="col-md-2">
-</div>
+		<div class="col-md-7">
+			第二步，设置奖励：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="如：一起去旅游" name="jiangli" type="text">
+			</div>
+			<a class="login-link" href="#">说明：比如要设定奖励：当爱情币达到500的时候一起去旅游。则本步骤输入“一起去旅游”</a>
+		</div>
+		<div class="col-md-2">
+			第三步
+			<div class="form-group">
+				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
+			</div>
+		</div>
+		
+	</div>
+	<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
+</form>
 		
 	</div> <!-- /container -->
 

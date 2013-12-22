@@ -26,61 +26,11 @@
 	<div class="container">
 	
 		<div class="row demo-row">
-			<div class="col-md-12">
-			  <div class="navbar navbar-inverse">
-				<div class="navbar-header">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
-				</div>            
-				<div class="navbar-collapse collapse navbar-collapse-01">
-					<ul class="nav navbar-nav navbar-left">
-						<li>
-						  <a href="<?php echo U('User/index');?>">
-							<?php echo (session('_APPNAME')); ?>
-						  </a>
-						</li>
-						<li>
-							<a href="#fakelink">
-								对方心情：<?php echo (session('moodValue')); ?>
-							</a>
-							<ul>
-								<li><a href="#fakelink">我的心情：<?php echo (session('myMoodValue')); ?></a></li>
-								<li>
-								  <a href="#fakelink">变更我的心情</a>
-								  <ul>
-									<li><a href="<?php echo U('User/changeMood?mood=幸福');?>">幸福</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=开心');?>">开心</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=郁闷');?>">郁闷</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=难过');?>">难过</a></li>
-									<li><a href="<?php echo U('User/changeMood?mood=生气');?>">生气</a></li>
-								  </ul> <!-- /Sub menu -->
-								</li>
-							</ul> <!-- /Sub menu -->
-						</li>
-						<li>
-						  <a href="<?php echo U('User/friend');?>">
-							好友圈
-							<span class="navbar-unread">1</span>
-						  </a>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-						  <a href="<?php echo U('User/displayAddDiary');?>">
-							写点滴
-						  </a>
-						</li>
-						<li class="active">
-							<a href="<?php echo U('User/account');?>">
-								<?php echo (session('userName')); ?>
-							</a>
-							<ul>
-								<li><a href="<?php echo U('User/account');?>">账户设置</a></li>
-								<li><a href="<?php echo U('Index/logout');?>">退出</a></li>
-							</ul> <!-- /Sub menu -->
-						</li>
-					</ul>
-				</div><!--/.nav -->
-			  </div>
+			<div class="col-md-6">
+				<a class="btn btn-inverse btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
+			</div>
+			<div class="col-md-6">
+				<a class="btn btn-inverse btn-lg btn-block" href="<?php echo U('User/displayAddDiary');?>">写点滴</a>
 			</div>
 		</div>
 
@@ -91,14 +41,14 @@
 		<a href="<?php echo U('User/add');?>" class="btn btn-block btn-lg btn-info">加分订单</a>
 	</div>
 	<div class="col-md-6">
-		<a href="<?php echo U('User/sub');?>" class="btn btn-block btn-lg btn-inverse">减分订单</a>
+		<a href="<?php echo U('User/sub');?>" class="btn btn-block btn-lg btn-primary">减分订单</a>
 	</div>
 </div> <!-- /row -->
 	
 	
 <div class="demo-headline">
 	<h1 class="demo-logo">
-		<div class="logo"></div>
+		<div class="logo"><img src="http://localhost/love/Public/FlatUI/images/demo/logo-mask.png"></div>
 		<?php echo ($View_money); ?>
 		<small><?php echo ($View_currency); ?></small>
 		<small><?php echo ($View_target); ?></small>
@@ -151,10 +101,11 @@
 	<footer>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-7">
+				<div class="col-md-10">
 					<h3 class="footer-title">关于</h3>
 					<p>您是不是喜欢这个应用呢？<br>
 					  如果喜欢的话可以关注我们的微博：<a href="http://weibo.com/u/3947676737" target="_blank">新浪微博</a><br>
+					 也欢迎您访问我们的官方网站：<a href="http://aqyh.sinaapp.com/" target="_blank">官方网站</a><br>
 					  您也可以赞助我们：
 						<a class="footer-brand" href="https://me.alipay.com/co8bit" target="_blank">
 							<img src="__PUBLIC__/FlatUI/images/donate_link.png" alt="donate_link">
@@ -162,17 +113,6 @@
 					</p>
 				</div> <!-- /col-md-7 -->
 
-				<div class="col-md-5">
-					<div class="footer-banner">
-						<h3 class="footer-title">使用帮助</h3>
-						<ul>
-							<li><a href="http://aqyh.sinaapp.com/help.php" target="_blank">新手教程</a></li>
-							<li><a href="http://aqyh.sinaapp.com/" target="_blank">提交建议</a></li>
-							<li><a href="http://aqyh.sinaapp.com/" target="_blank">官方网站</a></li>
-						</ul>
-						
-					</div>
-				</div>
 			</div>
 		</div>
 	</footer>
