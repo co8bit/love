@@ -209,7 +209,24 @@ class UserAction extends CommonAction
 	public function add()
 	{
 		$this->assign("_ADD_REMARK",_ADD_REMARK);
-		$this->display();
+		$this->treaty();
+	}
+	
+	public function toAddBySelect()//与toSub对称
+	{
+		//取出条约
+		$data = NULL;
+		$dbLow = D("Low");
+		$dbLow->init(session("pairId"));
+		$list = $dbLow->getContentAndScore();
+		
+		$radio = $this->_post("radio");
+		$data = $list[$radio];
+
+		//更新条约
+		$dbBill = D("Bill");
+		$dbBill->init(session("userId"),session("pairUserId"),true);
+		$this->isOk(-1,$dbBill->insertTempBill($data["content"],$data["score"]),"转账申请成功，等待对方确认","User/index","转账错误，请重试","User/add");
 	}
 	
 	public function toAdd()//与toSub对称
@@ -223,7 +240,7 @@ class UserAction extends CommonAction
 	public function sub()
 	{
 		$this->assign("_SUB_REMARK",_SUB_REMARK);
-		$this->display();
+		$this->treaty();
 	}
 	
 	public function toSub()//与toAdd对称
@@ -232,6 +249,23 @@ class UserAction extends CommonAction
 		$dbBill->init(session("userId"),session("pairUserId"),false);
 		
 		$this->isOk(-1,$dbBill->insertTempBill(),"扣除申请成功，等待对方确认","User/index","转账错误，请重试","User/sub");
+	}
+	
+	public function toSubBySelect()//与toAdd对称
+	{
+		//取出条约
+		$data = NULL;
+		$dbLow = D("Low");
+		$dbLow->init(session("pairId"));
+		$list = $dbLow->getContentAndScore();
+	
+		$radio = $this->_post("radio");
+		$data = $list[$radio];
+	
+		//更新条约
+		$dbBill = D("Bill");
+		$dbBill->init(session("userId"),session("pairUserId"),false);
+		$this->isOk(-1,$dbBill->insertTempBill($data["content"],$data["score"]),"转账申请成功，等待对方确认","User/index","转账错误，请重试","User/add");
 	}
 	
 	public function friend()

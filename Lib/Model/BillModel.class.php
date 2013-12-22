@@ -44,18 +44,30 @@ class BillModel extends Model {
 		}
 	}
 	
-	public function insertTempBill()//插入一个临时账单
+	public function insertTempBill($remark = NULL,$money = NULL)//插入一个临时账单
 	{
-		$dbUser = D("User");
-		$dbUser->init($this->pairUserId,"tempBillConten");//给对方插入一个账单
-		
-		$this->create();
-		
-		$data = $this->data;
-		$data["isAdd"] = $this->isAdd;
-		$billId = $this->add($data);
+		//准备数据
+		if ($remark === NULL)
+		{
+			$this->create();
+			
+			$data = NULL;
+			$data = $this->data;
+			$data["isAdd"] = $this->isAdd;
+			$billId = $this->add($data);
+		}
+		else
+		{
+			$data = NULL;
+			$data["remark"] = $remark;
+			$data["money"] = $money;
+			$data["isAdd"] = $this->isAdd;
+			$billId = $this->add($data);
+		}
 		
 		//更新账户billContent
+		$dbUser = D("User");
+		$dbUser->init($this->pairUserId);//给对方插入一个账单
 		return $dbUser->updateUserBillContent($billId);
 	}
 	

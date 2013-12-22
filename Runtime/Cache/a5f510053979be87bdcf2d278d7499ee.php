@@ -86,58 +86,65 @@
 
 		    
 
-<div class="login2">
-	<div class="login-screen">
-		<div class="login-icon">
-			<img src="__PUBLIC__/FlatUI/images/icons/svg/gift-box.svg">
-			<h4><?php echo (session('_APPNAME')); ?><small>加分订单</small></h4>
+<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/toAddBySelect');?>" >
+	<div class="row demo-row">
+		<h2><center>加分订单</center></h2>
+		<h3 class="demo-panel-title">选择适用条约</h3>
+		<div class="col-md-6">
+			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "0"): ?><!-- 0是奇数 -->
+					<label class="radio">
+           				<span class="icons">
+           					<span class="first-icon fui-radio-unchecked"></span>
+           					<span class="second-icon fui-radio-checked"></span>
+           				</span>
+           				<input id="optionsRadios1" value="<?php echo ($i-1); ?>" name = "radio" data-toggle="radio" type="radio">
+            			<?php echo ($vo); ?>
+          			</label><?php endif; endforeach; endif; else: echo "没有数据" ;endif; ?>
 		</div>
-		
-		<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toAdd');?>" >
-			<div class="login-form">
-				<b><font color="#000000"><center>加分订单</center></font></b>
-				<font color="#000000"><p>转账金额：</font>
-				<div class="form-group">
-					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="money" type="text">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<font color="#000000"><p>转账理由：</font>
-				<div class="row demo-row">
-					<h2><center>选择条约</center></h2>
-					<div class="col-md-6">
-						<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "0"): ?><!-- 0是奇数 -->
-								<label class="checkbox checked" for="checkbox2">
-									<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-									<input checked="checked" value="<?php echo ($i-1); ?>" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
-									<?php echo ($vo); ?>
-								</label><?php endif; endforeach; endif; else: echo "没有数据" ;endif; ?>
-					</div>
-					<div class="col-md-6">
-						<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): ?><label class="checkbox checked" for="checkbox2">
-									<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-									<input checked="checked" value="<?php echo ($i-1); ?>" name = "select[]" id="checkbox2" data-toggle="checkbox" type="checkbox">
-									<?php echo ($vo); ?>
-								</label><?php endif; endforeach; endif; else: echo "" ;endif; ?>
-					</div>
-				</div>
-				<div class="row demo-row">
-					<div class="col-md-2">
-					</div>
-					<div class="col-md-8">
-						<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
-					</div>
-				</div>
-				<div class="form-group">
-					<input class="form-control login-field"  placeholder="<?php echo ($_ADD_REMARK); ?>" id="login-pass" type="text" name="remark">
-					<label class="login-field-icon fui-mail" for="login-pass"></label>
-				</div>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
-				<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-				<a class="login-link" href="#">对方确定账单后即生效</a>
-			</div>
-		</form>
+		<div class="col-md-6">
+			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): ?><label class="radio">
+           				<span class="icons">
+           					<span class="first-icon fui-radio-unchecked"></span>
+           					<span class="second-icon fui-radio-checked"></span>
+           				</span>
+           				<input id="optionsRadios1" value="<?php echo ($i-1); ?>" name = "radio" data-toggle="radio" type="radio">
+            			<?php echo ($vo); ?>
+          			</label><?php endif; endforeach; endif; else: echo "" ;endif; ?>
+		</div>
 	</div>
-</div>
+	<div class="row demo-row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
+		</div>
+	</div>
+</form>
+<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/toAdd');?>" >
+	<div class="row demo-row">
+		<h3 class="demo-panel-title">或者输入理由及奖励爱情币的数目</h3>
+		<div class="col-md-7">
+			1.理由：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="例如：一起去自习室" name="remark" type="text">
+			</div>
+		</div>
+		<div class="col-md-3">
+			2.奖励的爱情币数量：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="例如：5" name="money" type="text">
+			</div>
+		</div>
+		<div class="col-md-2">
+			3.然后
+			<div class="form-group">
+				<button class="btn btn-info btn-lg btn-block" type="submit">提交</button>
+			</div>
+		</div>
+		<a class="login-link" href="#">对方确定账单后即生效</a>
+	</div>
+	<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
+</form>
 		
 	</div> <!-- /container -->
 

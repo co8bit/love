@@ -86,8 +86,8 @@
 
 		    
 
-<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "您没有未处理的消息" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="login2">
-		<div class="login-screen">
+<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "您没有未处理的消息" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="login3">
+		<div class="login-screen3">
 			<div class="login-icon">
 				<img src="__PUBLIC__/FlatUI/images/icons/svg/<?php echo ($vo["messageTitlePic"]); ?>.svg">
 				<h4><?php echo (session('_APPNAME')); ?><small><?php echo ($vo["messageTitle"]); ?></small></h4>
@@ -114,9 +114,10 @@
 			</form>
 		</div>
 	</div><?php endforeach; endif; else: echo "您没有未处理的消息" ;endif; ?>
+<p>
 <div class="row demo-row">
 	<div class="col-md-12">
-		<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
+		<a class="btn btn-info btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
 	</div>
 </div>
 

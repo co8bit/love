@@ -3406,10 +3406,23 @@ body.vjs-full-window {
   padding: 30px 38px 0px;
   position: relative;
 }
+.login3 {
+  background:  0 0 no-repeat;
+  background-size: auto;
+  color: #ffffff;
+  margin-bottom: 0px;
+  padding: 0px 38px 0px;
+  position: relative;
+}
 .login-screen {
   background-color: #1abc9c;
   min-height: 473px;
   padding: 123px 199px 33px 306px;
+}
+.login-screen3 {
+  background-color: #1abc9c;
+  min-height: auto;
+  padding: 30px 199px 1px 306px;
 }
 .login-icon {
   left: 200px;
@@ -3436,6 +3449,12 @@ body.vjs-full-window {
   font-weight: 700;
 }
 .login-form {
+  background-color: #edeff1;
+  padding: 2px 23px 2px;
+  position: relative;
+  border-radius: 6px;
+}
+.login-formOrigin{
   background-color: #edeff1;
   padding: 24px 23px 20px;
   position: relative;

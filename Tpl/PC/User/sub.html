@@ -1,29 +1,68 @@
 <layout name="User/userLayout"/>
 
-<div class="login2">
-	<div class="login-screen">
-		<div class="login-icon">
-			<img src="__PUBLIC__/FlatUI/images/icons/svg/gift-box.svg">
-			<h4>{$Think.session._APPNAME}<small>减分订单</small></h4>
+<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="{:U('User/toSubBySelect')}" >
+	<div class="row demo-row">
+		<h2><center>减分订单</center></h2>
+		<h3 class="demo-panel-title">选择适用条约</h3>
+		<div class="col-md-6">
+			<volist name="list" id="vo" empty="没有数据" mod="2">
+				<eq name="mod" value="0"> <!-- 0是奇数 -->
+					<label class="radio">
+           				<span class="icons">
+           					<span class="first-icon fui-radio-unchecked"></span>
+           					<span class="second-icon fui-radio-checked"></span>
+           				</span>
+           				<input id="optionsRadios1" value="{$i-1}" name = "radio" data-toggle="radio" type="radio">
+            			{$vo}
+          			</label>
+				</eq>
+			</volist>
 		</div>
-		
-		<form class="form-signin" id="login" name="login" method="post" action="{:U('User/toSub')}" >
-			<div class="login-form">
-				<b><font color="#000000"><center>减分订单</center></font></b>
-				<font color="#000000"><p>扣除金额：</font>
-				<div class="form-group">
-					<input class="form-control login-field" placeholder="如：20" id="pairUserName" name="money" type="text">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<font color="#000000"><p>扣除理由：</font>
-				<div class="form-group">
-					<input class="form-control login-field"  placeholder="{$_SUB_REMARK}" id="login-pass" type="text" name="remark">
-					<label class="login-field-icon fui-mail" for="login-pass"></label>
-				</div>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">确定</button>
-				<a class="btn btn-primary btn-lg btn-block" href="{:U('User/index')}">返回</a>
-				<a class="login-link" href="#">对方确定账单后即生效</a>
-			</div>
-		</form>
+		<div class="col-md-6">
+			<volist name="list" id="vo" mod="2">
+				<eq name="mod" value="1">
+					<label class="radio">
+           				<span class="icons">
+           					<span class="first-icon fui-radio-unchecked"></span>
+           					<span class="second-icon fui-radio-checked"></span>
+           				</span>
+           				<input id="optionsRadios1" value="{$i-1}" name = "radio" data-toggle="radio" type="radio">
+            			{$vo}
+          			</label>
+				</eq>
+			</volist>
+		</div>
 	</div>
-</div>
+	<div class="row demo-row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
+		</div>
+	</div>
+</form>
+<form class="form-signin" id="newPost" name="newPost" method="post" action="{:U('User/toSub')}" >
+	<div class="row demo-row">
+		<h3 class="demo-panel-title">或者输入理由及扣除爱情币的数目</h3>
+		<div class="col-md-7">
+			1.理由：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="例如：一起去自习室" name="remark" type="text">
+			</div>
+		</div>
+		<div class="col-md-3">
+			2.扣除的爱情币数量：
+			<div class="form-group">
+				<input class="form-control login-field" id="login-id" placeholder="例如：5" name="money" type="text">
+			</div>
+		</div>
+		<div class="col-md-2">
+			3.然后
+			<div class="form-group">
+				<button class="btn btn-info btn-lg btn-block" type="submit">提交</button>
+			</div>
+		</div>
+		<a class="login-link" href="#">对方确定账单后即生效</a>
+	</div>
+	<a class="btn btn-primary btn-lg btn-block" href="{:U('User/index')}">返回</a>
+</form>
