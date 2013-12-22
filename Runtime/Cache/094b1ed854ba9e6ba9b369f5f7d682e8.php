@@ -86,34 +86,47 @@
 
 		    
 
-<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/newTarget');?>" >
-	<div class="row demo-row">
-		<h2><center>设定奖励</center></h2>
-		
-		<div class="col-md-3">
-			第一步，输入条件：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="如：500" name="tiaojian" type="text">
+	<div class="login2">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="__PUBLIC__/FlatUI/images/icons/svg/pencils.svg" alt="Welcome to Mail App">
+				<h4><?php echo (session('_APPNAME')); ?><small>账户设置</small></h4>
 			</div>
-			<a class="login-link" href="#">说明：比如要设定奖励：当爱情币达到500的时候一起去旅游。则本步骤输入“500”</a>
+
+			<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toAccount');?>" >
+				<div class="login-form">
+					<font color="#000000">用户ID：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo (session('userId')); ?>" disabled="disabled" id="login-id" name="userId" type="text">
+						<label class="login-field-icon fui-play" for="login-id"></label>
+					</div>
+					
+					<font color="#000000">用户名：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo (session('userName')); ?>" disabled="disabled" id="login-name" name="userName" type="text">
+						<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+					
+					<font color="#000000">另一半的用户名：</font>
+					<div class="form-group">
+						<input class="form-control login-field" value="<?php echo (session('pairUserName')); ?>" disabled="disabled" id="login-pairUserId" name="pairUserId" type="text">
+						<label class="login-field-icon fui-heart" for="login-pairUserId"></label>
+					</div>
+					<a class="login-link" href="<?php echo U('User/cancelCon');?>">取消与另一半的连接</a>
+					<p>
+					
+					<font color="#000000">更改密码：（若不更改请留空）</font>
+					<div class="form-group">
+						<input class="form-control login-field" id="login-pass" name="userPassword" type="password">
+						<label class="login-field-icon fui-lock" for="login-pass"></label>
+					</div>
+					
+					<button class="btn btn-primary btn-lg btn-block" type="submit">应用更改</button>
+					<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
+				</div>
+			</form>
 		</div>
-		<div class="col-md-7">
-			第二步，设置奖励：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="如：一起去旅游" name="jiangli" type="text">
-			</div>
-			<a class="login-link" href="#">说明：比如要设定奖励：当爱情币达到500的时候一起去旅游。则本步骤输入“一起去旅游”</a>
-		</div>
-		<div class="col-md-2">
-			第三步
-			<div class="form-group">
-				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
-			</div>
-		</div>
-		
 	</div>
-	<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-</form>
 		
 	</div> <!-- /container -->
 

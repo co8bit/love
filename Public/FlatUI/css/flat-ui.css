@@ -3450,7 +3450,7 @@ body.vjs-full-window {
 }
 .login-form {
   background-color: #edeff1;
-  padding: 2px 23px 2px;
+  padding: 5px 23px 15px;
   position: relative;
   border-radius: 6px;
 }

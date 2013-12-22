@@ -495,7 +495,101 @@ class UserAction extends CommonAction
 	
 	public function note()//重要提醒
 	{
+		//显示未完成的提醒
+		$dbUser = D("User");//要对UserModel实例化只能通过D操作
+		$dbUser->init(session("userId"));
+
+		$outputList = $dbUser->getNoteContent();
+		
+		//显示快速选择列表
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
+		$lowId = $dbPair->getUserLowId();
+		
+		$dbLow = D("Low");
+		$dbLow->init(session("pairId"),$lowId);
+		$list = $dbLow->getContentAndScore();
+		
+		$count = count($list);
+		for ($i = 0; $i < $count; $i++)
+		{
+			$quicklyList[$i] = $list[$i]["content"];
+		}
+		
+		//模板输出
+		$this->assign('list',$outputList);//显示未完成对象
+		$this->assign('list2',$quicklyList);//显示快速选择
+		
+		$this->display();
+	}
 	
+	public function addNote()
+	{
+		$dbUser = D("User");//要对UserModel实例化只能通过D操作
+		$dbUser->init(session("userId"));
+		
+		$this->isFalse(-1,$dbUser->insertNote($this->_post("content")),"添加失败，请重试","User/note");
+		redirect(U('User/note'),0);
+	}
+	
+	public function addNoteBySelect()
+	{
+		//取出条约
+		$data = NULL;
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
+		$lowId = $dbPair->getUserLowId();
+		
+		$dbLow = D("Low");
+		$dbLow->init(session("pairId"),$lowId);
+		$list = $dbLow->getContentAndScore();
+		
+		$radio = $this->_post("radio");
+		$data = $list[$radio]["content"];
+		
+		//更新note
+		$dbUser = D("User");
+		$dbUser->init(session("userId"));
+		$this->isFalse(-1,$dbUser->insertNote($data),"添加失败，请重试","User/note");
+		redirect(U('User/note'),0);
+	}
+	
+	public function doneNote()
+	{
+		//取出条约
+		$dbUser = D("User");//要对UserModel实例化只能通过D操作
+		$dbUser->init(session("userId"));
+
+		$list = $dbUser->getNoteContent();
+		
+		//删除掉选中的
+		$select = $this->_post("select");
+		$selectCount = count($select);
+		$listCount = count($list);
+		for ($i = 0; $i < $listCount; $i++)
+		{
+			$tag = true;
+			for ($j = 0; $j < $selectCount; $j++)//检查i的值是否在select[]里
+			{
+				if ($i == $select[$j])
+				{
+					$tag = false;
+					break;
+				}
+			}
+			if ($tag)
+			{
+				$data[$i] = $list[$i];
+			}
+		}
+		
+		//更新note
+		/*
+		* //因为data是在list范围内组装的，所以必须传list的范围,
+		* 不然会出现count($data)范围和条约项的键值不匹配的情况(因为data的下标是select[i])
+		*/
+		$this->isFalse(-1,$dbUser->regroupNote($data,count($list)),"标记完成失败，请重试","User/note");
+		redirect(U('User/note'),0);
 	}
 	
 	public function treaty()//爱情条约

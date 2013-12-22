@@ -23,6 +23,8 @@ class UserModel extends Model {
 	private $userId = -1;//用户Id
 	private $billOrignContent = NULL;//未解析的原始内容，形如：string字符串
 	private $billContent = NULL;//billId数组，形如：$billContent[i] = billId;
+	private $NoteOrignContent = NULL;
+	private $NoteContent = NULL;
 	
 	public function init($userId)//传入UserId
 	{
@@ -122,6 +124,91 @@ class UserModel extends Model {
 		$data["userId"] = $this->userId;
 		$data["tempBillContent"] = $this->billOrignContent;
 		return $this->save($data);
+	}
+	
+	public function getOriginNoteContent()//得到原始内容
+	{
+		if ($this->NoteOrignContent === NULL)
+		{
+			$result = NULL;
+			$result = $this->where("userId=$this->userId")->select();
+			if (!$result)
+				return -1;
+			$this->NoteOrignContent = $result[0]["note"];
+		}
+		return $this->NoteOrignContent;
+	}
+	
+	public function getNoteContent()
+	{
+		if ($this->NoteContent === NULL)
+		{
+			//得到原样
+			$this->getOriginNoteContent();
+	
+			//解析content
+			$st = 0;
+			$count = 0;
+			$contentLen = strlen($this->NoteOrignContent);
+			while ($st < $contentLen)
+			{
+				$breakPoint = strpos($this->NoteOrignContent,_SELECT_NOTE_BREAK_FLAG,$st);
+				if (!$breakPoint)//到字符串最后一个内容了
+				{
+					$this->NoteContent[$count] = substr($this->NoteOrignContent,$st);
+					break;
+				}
+				$this->NoteContent[$count] = substr($this->NoteOrignContent,$st,$breakPoint - $st);
+				$count++;
+				$st = $breakPoint + _SELECT_NOTE_BREAK_FLAG_STRLEN;
+			}
+		}
+	
+		return $this->NoteContent;
+	}
+	
+	public function insertNote($new)//$new为新添加的内容
+	{
+		$this->getOriginNoteContent();
+		
+		if ($this->NoteOrignContent == "")
+			$this->NoteOrignContent = "$new";
+		else
+			$this->NoteOrignContent = $this->NoteOrignContent . _SELECT_NOTE_BREAK_FLAG . $new;
+		
+		$data = NULL;
+		$data["userId"] = $this->userId;
+		$data["note"] = $this->NoteOrignContent;
+		
+		return $this->save($data);
+	}
+	
+	public function updateNote($tmp,$count)//传入的参数是一个2维数组，如：$tmp[i] = note
+	{
+		$outputData["note"] = "";
+		//扔到data里
+		for ($i = 0; $i < $count; $i++)
+		{
+			if ( $tmp[$i] == NULL )
+			{
+				continue;
+			}
+			
+			//添加中断标志
+			if ($outputData["note"] == "")
+				$outputData["note"] = $tmp[$i];
+			else
+				$outputData["note"] = $outputData["note"] . _SELECT_NOTE_BREAK_FLAG . $tmp[$i];
+		}
+		
+		$outputData["userId"] = $this->userId;
+		//更新数据库
+		return $this->save($outputData);
+	}
+	
+	public function regroupNote($tmp,$count)
+	{
+		return $this->updateNote($tmp,$count);
 	}
 	
 	/*

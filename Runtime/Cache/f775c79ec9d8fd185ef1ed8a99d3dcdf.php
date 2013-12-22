@@ -86,12 +86,40 @@
 
 		    
 
-<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/toAddBySelect');?>" >
+<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/doneNote');?>" >
 	<div class="row demo-row">
-		<h2><center>加分订单</center></h2>
-		<h3 class="demo-panel-title">选择适用条约</h3>
+		<h2><center>未完成列表</center></h2>
 		<div class="col-md-6">
 			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "0"): ?><!-- 0是奇数 -->
+					<label class="checkbox" for="checkbox1">
+            			<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+            			<input value="<?php echo ($i-1); ?>" name = "select[]" id="checkbox1" data-toggle="checkbox" type="checkbox">
+            			<?php echo ($vo); ?>
+          			</label><?php endif; endforeach; endif; else: echo "没有数据" ;endif; ?>
+		</div>
+		<div class="col-md-6">
+			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): ?><label class="checkbox" for="checkbox1">
+            			<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+            			<input value="<?php echo ($i-1); ?>" name = "select[]" id="checkbox1" data-toggle="checkbox" type="checkbox">
+            			<?php echo ($vo); ?>
+          			</label><?php endif; endforeach; endif; else: echo "" ;endif; ?>
+		</div>
+	</div>
+	<div class="row demo-row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<button class="btn btn-info btn-lg btn-block" type="submit">已经完成</button>
+		</div>
+	</div>
+</form>
+
+<div class="row demo-row">
+	<form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/addNoteBySelect');?>" >
+		<h2><center>添加提醒</center></h2>
+		<h3 class="demo-panel-title">快速添加</h3>
+		<div class="col-md-6">
+			<?php if(is_array($list2)): $i = 0; $__LIST__ = $list2;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "0"): ?><!-- 0是奇数 -->
 					<label class="radio">
            				<span class="icons">
            					<span class="first-icon fui-radio-unchecked"></span>
@@ -102,7 +130,7 @@
           			</label><?php endif; endforeach; endif; else: echo "没有数据" ;endif; ?>
 		</div>
 		<div class="col-md-6">
-			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): ?><label class="radio">
+			<?php if(is_array($list2)): $i = 0; $__LIST__ = $list2;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "1"): ?><label class="radio">
            				<span class="icons">
            					<span class="first-icon fui-radio-unchecked"></span>
            					<span class="second-icon fui-radio-checked"></span>
@@ -111,40 +139,34 @@
             			<?php echo ($vo); ?>
           			</label><?php endif; endforeach; endif; else: echo "" ;endif; ?>
 		</div>
-	</div>
-	<div class="row demo-row">
-		<div class="col-md-2">
-		</div>
-		<div class="col-md-8">
-			<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
-		</div>
-	</div>
-</form>
-<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/toAdd');?>" >
-	<div class="row demo-row">
-		<h3 class="demo-panel-title">或自定义条目</h3>
-		<div class="col-md-7">
-			1.理由：
-			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="例如：一起去自习室" name="remark" type="text">
+		<div class="row demo-row">
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-8">
+				<button class="btn btn-info btn-lg btn-block" type="submit">确认</button>
 			</div>
 		</div>
-		<div class="col-md-3">
-			2.奖励的爱情币数量：
+</div>
+<div class="row demo-row">
+	</form>
+	<form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/addNote');?>" >
+		<h3 class="demo-panel-title">或者添加自定义提醒</h3>
+		<div class="col-md-10">
+			1.请输入提醒内容：
 			<div class="form-group">
-				<input class="form-control login-field" id="login-id" placeholder="例如：5" name="money" type="text">
+				<input class="form-control login-field" id="login-id" placeholder="例如：7点钟打电话" name="content" type="text">
 			</div>
 		</div>
 		<div class="col-md-2">
-			3.然后
+			2.提交
 			<div class="form-group">
-				<button class="btn btn-info btn-lg btn-block" type="submit">提交</button>
+				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
 			</div>
 		</div>
-		<a class="login-link" href="#">对方确定账单后即生效</a>
-	</div>
-	<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
-</form>
+		<a class="login-link" href="#">说明：提醒只有自己能看到。</a>
+		<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('User/index');?>">返回</a>
+	</form>
+</div>
 		
 	</div> <!-- /container -->
 

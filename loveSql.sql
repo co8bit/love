@@ -14,16 +14,17 @@ create table user(
 	userName varchar(100) NOT NULL,/*TODO：主键或者唯一*/
 	userPassword varchar(100) NOT NULL,
 	userPower varchar(100) NOT NULL,
-	primary key(userId),
 	
 	/*匹配信息*/
 	pairId bigint NOT NULL,
 	pairUserId bigint NOT NULL,
 	tempBillContent LONGTEXT NOT NULL,/*存着还没有确认的账单数据，如billId.分隔符.billId……*/
-	moodValue varchar(100)/*这里存的是对方的心情*/
+	moodValue varchar(100),/*这里存的是对方的心情*/
+	note LONGTEXT NOT NULL,
+	primary key(userId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert user values(NULL,"wbx","wbx","11111111",1,2,"","未设置");
-insert user values(NULL,"lxz","lxz","11111111",1,1,"","未设置");
+insert user values(NULL,"wbx","wbx","11111111",1,2,"","未设置","");
+insert user values(NULL,"lxz","lxz","11111111",1,1,"","未设置","");
 insert user(userName,userPassword,userPower,tempBillContent,moodValue) values("ldm","ldm","00000000","","未设置");
 insert user(userName,userPassword,userPower,tempBillContent,moodValue) values("djm","djm","00000000","","未设置");
 
