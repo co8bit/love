@@ -108,7 +108,7 @@ class UserAction extends CommonAction
 			$this->error('登陆有问题，系统退出后请重新登录','__APP__/Index/logout');
 		}
 		
-		if (session('pairId') == 0)
+		if (session('pairId') == 0)//用户还没有连接
 		{
 			redirect(U('User/ping'),0);
 		}
@@ -147,14 +147,35 @@ class UserAction extends CommonAction
 			redirect(U('User/treaty'),0);
 		}
 		
-		$dbBill = D("Bill");
-		$dbBill->init(session("pairId"));
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
+		$tmp = $dbPair->getTargetId();
+		if ($tmp == 0)//还没设定目标
+		{
+			redirect(U('User/target'),0);
+		}
+		else 
+		{
+			$dbTarget = D("Target");
+			$dbTarget->init($tmp);
+			$tmp = $dbTarget->getTarget();
+			$target = "当达到".$tmp["tiaojian"]._CURRENCY."时，我们就".$tmp["jiangli"]."!~";
+		}
 		
-		$data = $dbBill->getTempBillContent();
+		//为统计图表下面的数据做准备
+		$dbUser = D("User");
+		$dbUser->init(session("userId"));
+		$dbLow = D("Low");
+		$dbLow->init(session("pairId"));
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
 		
-		$this->assign('View_messageCount',count($data));
+		$this->assign('View_messageCount',count($dbUser->getBillContent()));
+		$this->assign('View_lowCount',count($dbLow->getContentAndScore()));
+		$this->assign('View_diaryCount',count($dbPair->getDiaryIdList()) + count($dbPair->getBillContent()));
 		$this->assign('View_currency',_CURRENCY);
 		$this->assign('View_money',$money);
+		$this->assign('View_target',$target);
 		
 		$this->display();
 	}
@@ -187,28 +208,30 @@ class UserAction extends CommonAction
 	
 	public function add()
 	{
+		$this->assign("_ADD_REMARK",_ADD_REMARK);
 		$this->display();
 	}
 	
 	public function toAdd()//与toSub对称
 	{
 		$dbBill = D("Bill");
-		$dbBill->init(session("pairId"));
+		$dbBill->init(session("userId"),session("pairUserId"),true);
 		
-		$this->isOk(-1,$dbBill->insertTempBill(true),"转账申请成功，等待对方确认","User/index","转账错误，请重试","User/add");
+		$this->isOk(-1,$dbBill->insertTempBill(),"转账申请成功，等待对方确认","User/index","转账错误，请重试","User/add");
 	}
 	
 	public function sub()
 	{
+		$this->assign("_SUB_REMARK",_SUB_REMARK);
 		$this->display();
 	}
 	
 	public function toSub()//与toAdd对称
 	{
 		$dbBill = D("Bill");
-		$dbBill->init(session("pairId"));
+		$dbBill->init(session("userId"),session("pairUserId"),false);
 		
-		$this->isOk(-1,$dbBill->insertTempBill(false),"扣除申请成功，等待对方确认","User/index","转账错误，请重试","User/sub");
+		$this->isOk(-1,$dbBill->insertTempBill(),"扣除申请成功，等待对方确认","User/index","转账错误，请重试","User/sub");
 	}
 	
 	public function friend()
@@ -387,11 +410,14 @@ class UserAction extends CommonAction
 	
 	public function message()//新消息
 	{
+		$dbUser = D("User");
+		$dbUser->init(session("userId"));
+
+		$billIdList = $dbUser->getBillContent();
+		
 		$dbBill = D("Bill");
-		$dbBill->init(session("pairId"));
-
-		$data = $dbBill->getTempBillContent();
-
+		$data = $dbBill->getBillInfo($billIdList);
+		
 		$count = count($data);
 		for ($i = 0; $i < $count; $i++)
 		{
@@ -405,7 +431,7 @@ class UserAction extends CommonAction
 			{
 				$output[$i]["messageTitle"] = "减分订单";
 				$output[$i]["messageTitlePic"] = "mail";
-				$output[$i]["money"] = 0 - $data[$i]["money"];
+				$output[$i]["money"] = $data[$i]["money"];
 			}
 			$output[$i]["remark"] = $data[$i]["remark"];
 			$output[$i]["mId"] = $data[$i]["billId"];
@@ -418,18 +444,19 @@ class UserAction extends CommonAction
 	public function editMessage()
 	{
 		$dbBill = D("Bill");
-		$dbBill->init(session("pairId"));
+		$dbBill->init(session("userId"),session("pairUserId"));
 		
-		$this->isOk(-1,$dbBill->updateTempBill($this->_post("mId")),"修改成功","User/message","修改错误，请重试","User/message");
+		//$dbBill->editTempBill($this->_post("mId"));
+		$this->isOk(-1,$dbBill->editTempBill($this->_post("mId")),"修改成功","User/message","修改错误，请重试","User/message");
 	}
 	
 	public function acceptMessage()
 	{
 		$dbBill = D("Bill");
-		$dbBill->init(session("pairId"));
+		$dbBill->init(session("userId"),session("pairUserId"));
 		
-		//$dbBill->acceptTempBill($this->_get("id"));
-		$this->isOk(-1,$dbBill->acceptTempBill($this->_get("id")),"确认成功","User/message","确认错误，请重试","User/message");
+		//$dbBill->acceptTempBill($this->_get("id"),session("pairId"));
+		$this->isOk(-1,$dbBill->acceptTempBill($this->_get("id"),session("pairId")),"确认成功","User/message","确认错误，请重试","User/message");
 	}
 	
 	public function note()//重要提醒
@@ -439,8 +466,9 @@ class UserAction extends CommonAction
 	
 	public function treaty()//爱情条约
 	{
-		$dbUser = D("User");//要对UserModel实例化只能通过D操作
-		$lowId = $dbUser->getUserLowId(session("pairId"));
+		$dbPair = D("Pair");//要对UserModel实例化只能通过D操作
+		$dbPair->init(session("pairId"));
+		$lowId = $dbPair->getUserLowId();
 		
 		if ($lowId == 1)//用户还没有创建条约
 		{
@@ -601,9 +629,109 @@ class UserAction extends CommonAction
 		$this->isOk(0,$dbLow->save($data),0,"User/treaty",0,"User/treaty");
 	}
 	
-	public function diary()//爱情日记
+	public function diary()//爱情账户明细
 	{
-	
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
+		$billList = $dbPair->getAllInfoFromBillIdList();
+		$diaryList = $dbPair->getAllInfoFromDiaryIdList();
+		//dump($billList);
+		//dump($diaryList);
+		
+		//两个进行合并，按时间归并排序
+		$billListCount = count($billList);
+		$diaryListCount = count($diaryList);
+		$dataCount = 0;
+		$i = 0;
+		$j = 0;
+		while (($i < $billListCount) && ($j < $diaryListCount))
+		{
+			while (($i < $billListCount) && ($billList[$i]["billTime"] < $diaryList[$j]["diaryTime"]))
+			{
+				$data[$dataCount] = $billList[$i];
+				$i++;
+				$dataCount++;
+			}
+			while (($j < $diaryListCount) && ($billList[$i]["billTime"] >= $diaryList[$j]["diaryTime"]))//点滴在相等的情况下优先
+			{
+				$data[$dataCount] = $diaryList[$j];
+				$j++;
+				$dataCount++;
+			}
+		}
+		while ($i < $billListCount)
+		{
+			$data[$dataCount] = $billList[$i];
+			$i++;
+			$dataCount++;
+		}
+		while ($j < $diaryListCount)//点滴在相等的情况下优先
+		{
+			$data[$dataCount] = $diaryList[$j];
+			$j++;
+			$dataCount++;
+		}
+		//dump($data);
+		
+		//对输出进行处理
+		for ($i = 0; $i < $dataCount; $i++)
+		{
+			if (($data[$i]["billId"] == NULL) || ($data[$i]["billId"] ==  ""))//是diary
+			{
+				$output[$i]["gouxuan"] = "\"todo-done\"";//是否被选上（绿色）
+				$output[$i]["icon"] = "\"todo-icon fui-heart\"";
+				$output[$i]["contant"] = $data[$i]["content"];
+				$output[$i]["score"] = $data[$i]["diaryTime"];
+			}
+			else//是bill
+			{
+				if ($data[$i]["isAdd"] == true)
+				{
+					$output[$i]["icon"] = "\"todo-icon fui-plus\"";
+					$output[$i]["score"] = "现金流：+".$data[$i]["money"]."    日期：".$data[$i]["billTime"];
+				}
+				else
+				{
+					$output[$i]["icon"] = "\"todo-icon fui-cross\"";
+					$output[$i]["score"] = "现金流：".(0 - $data[$i]["money"])."    日期：".$data[$i]["billTime"];
+				}
+				$output[$i]["contant"] = $data[$i]["remark"];
+			}
+		}
+		
+		$this->assign("list",$output);
+		$this->display();
 	}
 	
+	public function displayAddDiary()
+	{
+		$this->display();
+	}
+	
+	public function addDiary()
+	{
+		$dbDiary = D("Diary");
+		$dbDiary->create();
+		
+		//更新pair表的diaryIdList
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
+		
+		$this->isOk(-1,$dbPair->insertDiaryId($dbDiary->add()),"记录成功","User/index","发布错误，请重试","User/displayAddDiary");
+	}
+	
+	public function target()
+	{
+		$this->display();
+	}
+	
+	public function newTarget()
+	{
+		$dbTarget = D("Target");
+		$dbTarget->create();
+		
+		$dbPair = D("Pair");
+		$dbPair->init(session("pairId"));
+		$this->isOk(-1,$dbPair->insertTarget($dbTarget->add()),"目标设置成功","User/index","目标设置失败，请重试","User/target");
+	}
 }

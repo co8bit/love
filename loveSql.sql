@@ -19,12 +19,13 @@ create table user(
 	/*匹配信息*/
 	pairId bigint NOT NULL,
 	pairUserId bigint NOT NULL,
+	tempBillContent LONGTEXT NOT NULL,/*存着还没有确认的账单数据，如billId.分隔符.billId……*/
 	moodValue varchar(100)/*这里存的是对方的心情*/
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert user values(NULL,"wbx","wbx","11111111",1,2,"未设置");
-insert user values(NULL,"lxz","lxz","11111111",1,1,"未设置");
-insert user(userName,userPassword,userPower,moodValue) values("ldm","ldm","00000000","未设置");
-insert user(userName,userPassword,userPower,moodValue) values("djm","djm","00000000","未设置");
+insert user values(NULL,"wbx","wbx","11111111",1,2,"","未设置");
+insert user values(NULL,"lxz","lxz","11111111",1,1,"","未设置");
+insert user(userName,userPassword,userPower,tempBillContent,moodValue) values("ldm","ldm","00000000","","未设置");
+insert user(userName,userPassword,userPower,tempBillContent,moodValue) values("djm","djm","00000000","","未设置");
 
 create table pair(
 	pairId bigint NOT NULL AUTO_INCREMENT,
@@ -33,11 +34,12 @@ create table pair(
 	pairDate datetime,
 	money bigint,
 	lowId bigint,
-	billContent LONGTEXT NOT NULL,/*存着数据,如billId.分隔符.billId……*/
-	tempBillContent LONGTEXT NOT NULL,/*存着还没有确认的账单数据，如billId.分隔符.billId……*/
+	billContent LONGTEXT NOT NULL,/*存着已经生效的账单数据,如billId.分隔符.billId……*/
+	diaryIdList LONGTEXT NOT NULL,
+	targetId  bigint,
 	primary key(pairId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1,"","");/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
+insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1,"","",0);/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
 
 create table tempPair(
 	tempPairId bigint NOT NULL AUTO_INCREMENT,
@@ -63,6 +65,20 @@ create table bill(
 	remark LONGTEXT,
 	money int,
 	isAdd boolean,
-	billTime date,
+	billTime datetime,
 	primary key(billId)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+create table diary(
+	diaryId bigint NOT NULL AUTO_INCREMENT,
+	content LONGTEXT,
+	diaryTime datetime,
+	primary key(diaryId)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+create table target(
+	targetId bigint NOT NULL AUTO_INCREMENT,
+	tiaojian LONGTEXT,
+	jiangli LONGTEXT,
+	primary key(targetId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;

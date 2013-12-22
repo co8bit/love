@@ -11,8 +11,9 @@ class LowModel extends Model {
 	{
 		if ($lowId === -1)//还没有lowId，则根据pairId查找
 		{
-			$dbUser = D("User");//要对UserModel实例化只能通过D操作
-			$this->lowId = $dbUser->getUserLowId($pairId);
+			$dbPair = D("Pair");//要对UserModel实例化只能通过D操作
+			$dbPair->init($pairId);
+			$this->lowId = $dbPair->getUserLowId();
 		}
 		else
 		{

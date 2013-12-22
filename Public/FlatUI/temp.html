@@ -20,100 +20,60 @@
 </head>
 <body>
 
-<div class="container">
-<div class="row demo-row">
-			<div class="col-md-12">
-			  <div class="navbar navbar-inverse">
-				<div class="navbar-header">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
-				</div>			  
-				<div class="navbar-collapse collapse navbar-collapse-01">
-					<ul class="nav navbar-nav navbar-left">
-						<li>
-						  <a href="#fakelink">
-							爱情银行
-						  </a>
-						</li>
-						<li>
-						  <a href="#fakelink">
-							对方心情指数：60
-						  </a>
-						</li>
-						<li>
-						  <a href="#fakelink">
-							好友圈
-							<span class="navbar-unread">1</span>
-						  </a>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="active">
-							<a href="#fakelink">
-								co8bit
-							</a>
-							<ul>
-								<li><a href="#fakelink">账户设置</a></li>
-								<li><a href="#fakelink">退出</a></li>
-							</ul> <!-- /Sub menu -->
-						</li>
-					</ul>
-				</div><!--/.nav -->
-			  </div>
-			</div>
-		</div>
-	
-	<div class="login2">
-		<div class="login-screen">
-			<div class="login-icon">
-				<img src="images/icons/svg/chat.svg">
-				<h4>{$Think.session._APPNAME}<small>加分订单</small></h4>
-			</div>
-			
-			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/verifyTempCon')}" >
-				<div class="login-form">
-					<b><font color="#000000"><center>加分订单</center></font></b>
-					<div class="form-group">
-						<input class="form-control login-field" placeholder="进账金额：如20" id="pairUserName" name="pairUserName" type="text">
-						<label class="login-field-icon fui-user" for="login-name"></label>
-					</div>
-						<div class="form-group">
-						<input class="form-control login-field"  placeholder="进账理由：如有你陪伴很开心" id="login-pass" type="text" name="remark">
-						<label class="login-field-icon fui-mail" for="login-pass"></label>
-					</div>
-					<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
-					<a class="btn btn-primary btn-lg btn-block" href="{:U('User/ignoreTempPair')}">返回</a>
-					<a class="login-link" href="#">对方确定账单后即生效</a>
-				</div>
-			</form>
-		</div>
+	<div class="container">
+	<div class="col-md-2">
 	</div>
-	<div class="login2">
-		<div class="login-screen">
-			<div class="login-icon">
-				<img src="images/icons/svg/mail.svg">
-				<h4>{$Think.session._APPNAME}<small>减分订单</small></h4>
+	<div class="col-md-8">
+		  <div class="todo">
+			<div class="todo-search">
+			  <input class="todo-search-field" value="" disabled="disabled" placeholder="爱情账户明细" type="search">
 			</div>
-			
-			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/verifyTempCon')}" >
-				<div class="login-form">
-					<b><font color="#000000"><center>加分订单</center></font></b>
-					<div class="form-group">
-						<input class="form-control login-field" placeholder="进账金额：如20" id="pairUserName" name="pairUserName" type="text">
-						<label class="login-field-icon fui-user" for="login-name"></label>
-					</div>
-						<div class="form-group">
-						<input class="form-control login-field"  placeholder="进账理由：如有你陪伴很开心" id="login-pass" type="text" name="remark">
-						<label class="login-field-icon fui-mail" for="login-pass"></label>
-					</div>
-					<button class="btn btn-primary btn-lg btn-block" type="submit">转账</button>
-					<a class="btn btn-primary btn-lg btn-block" href="{:U('User/ignoreTempPair')}">返回</a>
-					<a class="login-link" href="#">对方确定账单后即生效</a>
+			<ul>
+			  <li class="">
+				<div class="todo-icon fui-user"></div>
+				<div class="todo-content">
+					<h4 class="todo-name">
+						Meet <strong>Adrian</strong> at <strong>6pm</strong>
+					</h4>
+					Times Square
 				</div>
-			</form>
+			  </li>
+			  <li class="">
+				<div class="todo-icon fui-list"></div>
+				<div class="todo-content">
+				  <h4 class="todo-name">
+					Chat with <strong>V.Kudinov</strong>
+				  </h4>
+				  Skype conference an 9 am
+				</div>
+			  </li>
+			  <li class="todo-done">
+				<div class="todo-icon fui-eye"></div>
+				<div class="todo-content">
+				  <h4 class="todo-name">
+					Watch <strong>Iron Man</strong>
+				  </h4>
+				  1998 Broadway
+				</div>
+			  </li>
+			  <li class="todo-done">
+				<div class="todo-icon fui-time"></div>
+				<div class="todo-content">
+				  <h4 class="todo-name">
+					Fix bug on a <strong>Website</strong>
+				  </h4>
+				  As soon as possible
+				</div>
+			  </li>
+			</ul>
+		  </div>
 		</div>
+	<div class="col-md-2">
 	</div>
-	
-</div> <!-- /container -->
+			
+		
+	</div> <!-- /container -->
+
 		
 		
 	

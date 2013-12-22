@@ -2,17 +2,30 @@
 class PairModel extends Model {
 	
 	private $pairId = 0;
-	private $billOrignContent = NULL;//未解析的原始内容，形如：string字符串
-	private $billContent = NULL;//billId数组，形如：$billContent[i] = billId;
 	private $money = 0;
-	private $tempBillOrignContent = NULL;
-	private $tempBillContent = NULL;
-	
+	private $billOrignContent = "";
+	private $billContent = NULL;//billContent[i] = billId
+	protected $lowId = -1;
+	private $diaryIdOrignList = NULL;
+	private $diaryIdList = NULL;//diaryId[i] = diaryId
 	
 	public function init($pairId)
 	{
 		$this->pairId = $pairId;
 		$this->money = $this->getMoney();
+	}
+	
+	public function getUserLowId()
+	{
+		if ($this->lowId === -1)
+		{
+			$result = NULL;
+			$result = $this->where("pairId=$this->pairId")->select();
+			if (!$result)
+				return -1;
+			$this->lowId = $result[0]["lowId"];
+		}
+		return $this->lowId;
 	}
 	
 	public function getMoney()
@@ -28,15 +41,12 @@ class PairModel extends Model {
 		$data = NULL;
 		$data["pairId"] = $pairId;
 		$data["lowId"] = $lowId;
-		if (!$this->save($data))
-			return 0;
-		else
-			return 1;
+		return $this->save($data);
 	}
 	
-	public function getOriginBillContent()
+	public function getOriginBillContent()//得到原始内容
 	{
-		if ($this->billOrignContent === NULL)
+		if ($this->billOrignContent === "")
 		{
 			$result = NULL;
 			$result = $this->where("pairId=$this->pairId")->select();
@@ -75,78 +85,18 @@ class PairModel extends Model {
 		return $this->billContent;
 	}
 	
-	public function getTempOriginBillContent()
-	{
-		if ($this->tempBillOrignContent === NULL)
-		{
-			$result = NULL;
-			$result = $this->where("pairId=$this->pairId")->select();
-			if (!$result)
-				return -1;
-			$this->tempBillOrignContent = $result[0]["tempBillContent"];
-		}
-		return $this->tempBillOrignContent;
-	}
-	
-	public function getTempBillContent()
-	{
-		if ($this->tempBillContent === NULL)
-		{
-			//得到原样
-			$this->getTempOriginBillContent();
-			
-			//解析content
-			$st = 0;
-			$count = 0;
-			$contentLen = strlen($this->tempBillOrignContent);
-			while ($st < $contentLen)
-			{
-				$breakPoint = strpos($this->tempBillOrignContent,_SPECAL_BILL_END_FLAG,$st);
-				if (!$breakPoint)//到字符串最后一个内容了
-				{
-					$this->tempBillContent[$count] = substr($this->tempBillOrignContent,$st);
-					break;
-				}
-				$this->tempBillContent[$count] = substr($this->tempBillOrignContent,$st,$breakPoint - $st);
-				$count++;
-				$st = $breakPoint + _SPECAL_BILL_END_FLAG_STRLEN;
-			}
-		}
-		
-		return $this->tempBillContent;
-	}
-	
-	public function updateOneTempBillContent($billId)//更新未确认账单
+	public function updateBillArray($isAdd,$billId,$changeMoney)//更新pair的账单id数组
 	/*
 	 * 参数是：isAdd=true说明是加分账单，一个billId
 	*/
 	{
-		$this->getTempOriginBillContent();
-	
-		if ($this->tempBillOrignContent == "")
-			$this->tempBillOrignContent = "$billId";
-		else
-			$this->tempBillOrignContent = $this->tempBillOrignContent . _SPECAL_BILL_END_FLAG . $billId;
-	
-		$data = NULL;
-		$data["pairId"] = $this->pairId;
-		$data["tempBillContent"] = $this->tempBillOrignContent;
-
-		return $this->save($data);
-	}
-	
-	public function updateBillArray($isAdd,$billId,$changeMoney)//更新pair的账单id数组
-	/*
-	 * 参数是：isAdd=true说明是加分账单，一个billId
-	 */
-	{
 		$this->getOriginBillContent();
-		
+	
 		if ($this->billOrignContent == "")
 			$this->billOrignContent = "$billId";
 		else
 			$this->billOrignContent = $this->billOrignContent . _SPECAL_BILL_END_FLAG . $billId;
-		
+	
 		$data = NULL;
 		$data["pairId"] = $this->pairId;
 		$data["billContent"] = $this->billOrignContent;
@@ -157,42 +107,87 @@ class PairModel extends Model {
 		return $this->save($data);
 	}
 	
-	public function deleteOneTempBill($mId)
+	public function getDiaryIdOriginList()//得到原始内容
 	{
-		$this->getTempBillContent();
-		$count = count($this->tempBillContent);
-		for ($i = 0; $count; $i++)
+		if ($this->diaryIdOrignList === NULL)
 		{
-			if ($this->tempBillContent[$i] == $mId)//把当前值删掉
+			$result = NULL;
+			$result = $this->where("pairId=$this->pairId")->select();
+			if (!$result)
+				return -1;
+			$this->diaryIdOrignList = $result[0]["diaryIdList"];
+		}
+		return $this->diaryIdOrignList;
+	}
+	
+	public function getDiaryIdList()
+	{
+		if ($this->diaryIdOrignList === NULL)
+		{
+			//得到原样
+			$this->getDiaryIdOriginList();
+	
+			//解析content
+			$st = 0;
+			$count = 0;
+			$contentLen = strlen($this->diaryIdOrignList);
+			while ($st < $contentLen)
 			{
-				for ($j = $i + 1; $j < $count; $j++)
+				$breakPoint = strpos($this->diaryIdOrignList,_SPECAL_DIARY_END_FLAG,$st);
+				if (!$breakPoint)//到字符串最后一个内容了
 				{
-					$this->tempBillContent[$j - 1] = $this->tempBillContent[$j];
+					$this->diaryIdList[$count] = substr($this->diaryIdOrignList,$st);
+					break;
 				}
-				$this->tempBillContent[$j-1] = NUlL;//这条语句并不能把最后一个元素删除了，count($this->tempBillContent)之后还是$count（没减一）
-				$count--;//上面这条语句并不能把最后一个元素删除了，所以需要减掉
-				break;
+				$this->diaryIdList[$count] = substr($this->diaryIdOrignList,$st,$breakPoint - $st);
+				$count++;
+				$st = $breakPoint + _SPECAL_DIARY_END_FLAG_STRLEN;
 			}
 		}
+	
+		return $this->diaryIdList;
+	}
+	
+	public function insertDiaryId($newDiaryId)
+	{
+		$this->getDiaryIdOriginList();
 		
-		/*
-		 * 下面开始，$this->tempBillContent的长度必须用$count，因为$this->tempBillContent数组删除掉了一个值。
-		 */
+		if ($this->diaryIdOrignList == "")
+			$this->diaryIdOrignList = "$newDiaryId";
+		else
+			$this->diaryIdOrignList = $this->diaryIdOrignList . _SPECAL_BILL_END_FLAG . $newDiaryId;
 		
-		//更新tempBill
-		$this->tempBillOrignContent = "";
-		for ($i = 0; $i < $count; $i++)//必须用$count，因为$this->tempBillContent数组删除掉了一个值。这里的count已经减1了
-		{
-			$tmp = $this->tempBillContent[$i];
-			if ($this->tempBillOrignContent == "")
-				$this->tempBillOrignContent = "$tmp";
-			else
-				$this->tempBillOrignContent = $this->tempBillOrignContent . _SPECAL_BILL_END_FLAG . $tmp;
-		}
 		$data = NULL;
 		$data["pairId"] = $this->pairId;
-		$data["tempBillContent"] = $this->tempBillOrignContent;
+		$data["diaryIdList"] = $this->diaryIdOrignList;
 		return $this->save($data);
+	}
+	
+	public function getAllInfoFromBillIdList()//得到完整的记录信息
+	{
+		$billIdList = $this->getBillContent();
+		$dbBill = D("Bill");
+		return $dbBill->getBillInfo($billIdList);
+	}
+	
+	public function getAllInfoFromDiaryIdList()//得到完整的记录信息
+	{
+		$diaryIdList = $this->getDiaryIdList();
+		$dbDiary = D("Diary");
+		return $dbDiary->getDiaryInfo($diaryIdList);
+	}
+	
+	public function insertTarget($targetId)
+	{
+		$data["pairId"] = $this->pairId;
+		$data["targetId"] = $targetId;
+		return $this->save($data);
+	}
+	
+	public function getTargetId()
+	{
+		$tmp = $this->where("pairId=".$this->pairId)->select();
+		return $tmp[0]["targetId"];
 	}
 }
 ?>

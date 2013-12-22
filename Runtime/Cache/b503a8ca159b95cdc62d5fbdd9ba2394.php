@@ -65,7 +65,7 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-						  <a href="<?php echo U('User/newPost');?>">
+						  <a href="<?php echo U('User/displayAddDiary');?>">
 							写点滴
 						  </a>
 						</li>
@@ -86,35 +86,28 @@
 
 		    
 
-<div class="container">
-	<div class="login2">
-		<div class="login-screen">
-			<div class="login-icon">
-				<img src="__PUBLIC__/FlatUI/images/login/icon.png" alt="Welcome to Mail App">
-				<h4><?php echo (session('_APPNAME')); ?><small>关联另一半</small></h4>
-			</div>
-			
-			<form class="form-signin" id="login" name="login" method="post" action="<?php echo U('User/toPing');?>" >
-				<div class="login-form">
-					<b><font color="#000000"><center>使用之前需先与另一半账户关联</center></font></b>
-					<div class="form-group">
-						<input class="form-control login-field" value="" placeholder="请输入对方账户名" id="login-name" name="userName" type="text">
-						<label class="login-field-icon fui-user" for="login-name"></label>
-					</div>
-	
-					<div class="form-group">
-						<input class="form-control login-field" value="" placeholder="请输入验证信息，比如：我是.." id="login-pass" type="text" name="remark">
-						<label class="login-field-icon fui-mail" for="login-pass"></label>
-					</div>
-	
-					<button class="btn btn-primary btn-lg btn-block" type="submit">关联另一半</button>
-					<a class="btn btn-primary btn-lg btn-block" href="<?php echo U('Index/help');?>">先看看教程</a>
-					<a class="login-link" href="#">对方需已在爱情银行开户</a>
-				</div>
-			</form>
-		</div>
+<div class="col-md-2">
 	</div>
-</div> <!-- /container -->
+	<div class="col-md-8">
+		  <div class="todo">
+			<div class="todo-search">
+			  <input class="todo-search-field" value="" disabled="disabled" placeholder="爱情账户明细" type="search">
+			</div>
+			<ul>
+				<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "还没有日记，去创建吧" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li class=<?php echo ($vo["gouxuan"]); ?>>
+						<div class=<?php echo ($vo["icon"]); ?>></div>
+						<div class="todo-content">
+							<h4 class="todo-name">
+								<?php echo ($vo["contant"]); ?>
+							</h4>
+								<?php echo ($vo["score"]); ?>
+						</div>
+					</li><?php endforeach; endif; else: echo "还没有日记，去创建吧" ;endif; ?>
+			</ul>
+		  </div>
+		</div>
+	<div class="col-md-2">
+</div>
 		
 	</div> <!-- /container -->
 
@@ -138,9 +131,9 @@
 					<div class="footer-banner">
 						<h3 class="footer-title">使用帮助</h3>
 						<ul>
-							<li><a href="http://www.co8bit.com/love/help.php" target="_blank">新手教程</a></li>
-							<li><a href="http://www.co8bit.com/love/" target="_blank">提交建议</a></li>
-							<li><a href="http://www.co8bit.com/love/" target="_blank">官方网站</a></li>
+							<li><a href="http://aqyh.sinaapp.com/help.php" target="_blank">新手教程</a></li>
+							<li><a href="http://aqyh.sinaapp.com/" target="_blank">提交建议</a></li>
+							<li><a href="http://aqyh.sinaapp.com/" target="_blank">官方网站</a></li>
 						</ul>
 						
 					</div>

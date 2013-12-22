@@ -9,7 +9,10 @@ define("_SELECT_CONTENT_BREAK_FLAG","--------做到+");
 define("_SELECT_CONTENT_BREAK_FLAG_STRLEN",strlen(_SELECT_CONTENT_BREAK_FLAG));
 define("_SPECAL_BILL_END_FLAG","%$#@");
 define("_SPECAL_BILL_END_FLAG_STRLEN",strlen(_SPECAL_BILL_END_FLAG));
+define("_SPECAL_DIARY_END_FLAG",_SPECAL_BILL_END_FLAG);
+define("_SPECAL_DIARY_END_FLAG_STRLEN",strlen(_SPECAL_DIARY_END_FLAG));
 define("_ADD_REMARK","有你陪伴很开心");
+define("_SUB_REMARK","你没做到约定");
 define("_DEBUG",true);
 
 $_ANNOUNCEMENT = array("本系统正在测试","已升级成为1.0.0版本","空","空","空","空","空");//预留7个空
