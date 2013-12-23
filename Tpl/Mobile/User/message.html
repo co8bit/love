@@ -1,12 +1,15 @@
 <layout name="User/userLayout"/>
 
+<dl class="palette palette-wet-asphalt">
+ 	<h3 class="demo-panel-title"><center>消息中心</center></h3>
+ </dl>
+ <p>
 <volist name="list" id="vo" empty="您没有未处理的消息" mod="2">
-	<div class="login3">
-		<div class="login-screen3">
-			<div class="login-icon">
-				<img src="__PUBLIC__/FlatUI/images/icons/svg/{$vo.messageTitlePic}.svg">
-				<h4>{$Think.session._APPNAME}<small>{$vo.messageTitle}</small></h4>
-			</div>
+	<div class="row demo-row">
+		<div class="col-md-12">
+			<dl class={$vo.classStr}>
+        		<h3 class="demo-panel-title"><center>{$vo.messageTitle}</center></h3>
+        	</dl>
 			
 			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/editMessage')}" >
 				<div class="login-form">

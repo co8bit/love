@@ -2,7 +2,8 @@
 
 <form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="{:U('User/selectTreaty')}" >
 	<div class="row demo-row">
-		<h2><center>选择条约</center></h2>
+		<h2><center>条约</center></h2>
+		<h3>选择条约</h3>
 		<div class="col-md-6">
 			<volist name="list" id="vo" empty="没有数据" mod="2">
 				<eq name="mod" value="0"> <!-- 0是奇数 -->
@@ -36,7 +37,7 @@
 </form>
 <form class="form-signin" id="newPost" name="newPost" method="post" action="{:U('User/newTreaty')}" >
 	<div class="row demo-row">
-		<h3 class="demo-panel-title">添加条约</h3>
+		<h3 class="demo-panel-title">或者添加条约</h3>
 		<div class="col-md-7">
 			第一步，请输入条款：
 			<div class="form-group">

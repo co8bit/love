@@ -1,12 +1,12 @@
 <layout name="User/userLayout"/>
 
-<div class="col-md-2">
-	</div>
-	<div class="col-md-8">
+<div class="row demo-row">
+	<div class="col-md-12">
+		<dl class="palette palette-peter-river">
+        	<h3 class="demo-panel-title"><center>爱情账户明细</center></h3>
+        </dl>
 		  <div class="todo">
-			<div class="todo-search">
-			  <input class="todo-search-field" value="" disabled="disabled" placeholder="爱情账户明细" type="search">
-			</div>
+			
 			<ul>
 				<volist name="list" id="vo" empty="还没有日记，去创建吧" mod="2">
 					<li class={$vo.gouxuan}>
@@ -24,6 +24,5 @@
 		  <p>
 		  <a class="btn btn-info btn-lg btn-block" href="{:U('User/index')}">返回</a>
 		  <p>
-		</div>
-	<div class="col-md-2">
+	</div>
 </div>

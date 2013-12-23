@@ -1,11 +1,10 @@
 <layout name="User/userLayout"/>
 
-	<div class="login2">
-		<div class="login-screen">
-			<div class="login-icon">
-				<img src="__PUBLIC__/FlatUI/images/icons/svg/pencils.svg" alt="Welcome to Mail App">
-				<h4>{$Think.session._APPNAME}<small>账户设置</small></h4>
-			</div>
+	<div class="row demo-row">
+		<div class="col-md-12">
+			<dl class="palette palette-peter-river">
+        		<h3 class="demo-panel-title"><center>账户设置</center></h3>
+       	 	</dl>
 
 			<form class="form-signin" id="login" name="login" method="post" action="{:U('User/toAccount')}" >
 				<div class="login-form">

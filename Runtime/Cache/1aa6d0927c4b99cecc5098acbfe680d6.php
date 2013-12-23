@@ -19,47 +19,6 @@
 	  <script src="__PUBLIC__/FlatUI/js/html5shiv.js"></script>
 	<![endif]-->
 </head>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>爱情银行</title>
-<!-- Bootstrap -->   <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-   <style type="text/css">
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
-
-      .form-signin {
-        max-width: 300px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
-      .form-signin .form-signin-heading,
-      .form-signin .checkbox {
-        margin-bottom: 10px;
-      }
-      .form-signin input[type="text"],
-      .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-      }
-
-    </style>
-</head>
-
-
 
 <body>
 			  <!--    <dl class="palette palette-orange"> -->
@@ -67,45 +26,8 @@
 	<div class="container">
 	
 		<div class="row demo-row">
-			<div class="col-md-1">
-			</div>
-			<div class="col-md-10">
-			  <div class="navbar navbar-inverse navbar-fixed-top">
-			      <div class="navbar-inner">
-			        <div class="container-fluid">
-			          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			          </button>
-			          <a class="brand" href="<?php echo U('User/index');?>"><?php echo (session('_APPNAME')); ?></a>
-			          <div class="nav-collapse collapse">
-			            <p class="navbar-text pull-right">
-			            	 <a href="<?php echo U('User/displayAddDiary');?>">
-							写点滴
-						  </a>
-			            </p>
-			            <p class="navbar-text pull-right">
-			            	<a href="<?php echo U('Index/logout');?>">退出</a>
-			            </p>
-			            <ul class="nav">
-			              <li><a href="__URL__/main" class="btn dropdown-toggle data-toggle="dropdown" btn-small btn btn-inverse">首页 </a></li>
-			               <li><a href="__URL__/purchases" class="btn dropdown-toggle btn-small btn btn-inverse">进货单 </a></li>
-			               <li><a href="__URL__/sale" class="btn dropdown-toggle btn-small btn btn-inverse">销售单 </a></li>
-			               <li><a href="__URL__/inventory" class="btn dropdown-toggle btn-small btn btn-inverse">库存单 </a></li>
-			               <li><a href="__URL__/accountpayable" class="btn dropdown-toggle btn-small btn btn-inverse">应付款 </a></li>
-			               <li><a href="__URL__/accountdue" class="btn dropdown-toggle btn-small btn btn-inverse">应收款 </a></li>
-			               <li><a href="__URL__/finance" class="btn dropdown-toggle btn-small btn btn-inverse">财务</a></li>
-			               <li><a href="__URL__/staffmanage" class="btn dropdown-toggle btn-small btn btn-inverse">员工管理 </a></li>
-			               <li><a href="__URL__/user" class=" btn dropdown-toggle btn-small btn btn-inverse">账户管理 </a></li>
-			               <li><a href="__URL__/about" class=" btn dropdown-toggle btn-small btn btn-inverse">关于 </a></li>
-			            </ul>
-			          </div><!--/.nav-collapse -->
-			        </div>
-			      </div>
-			    </div>
-			</div>
-			<div class="col-md-1">
+			<div class="col-md-6">
+				<a class="btn btn-inverse btn-lg btn-block" href="<?php echo U('User/index');?>">爱情银行</a>
 			</div>
 		</div>
 
@@ -113,7 +35,12 @@
 
 <form class="form-signin" id="selectTreaty" name="selectTreaty" method="post" action="<?php echo U('User/selectTreaty');?>" >
 	<div class="row demo-row">
-		<h2><center>选择条约</center></h2>
+		<dl class="palette palette-peter-river">
+              <h3 class="demo-panel-title"><center>条约</center></h3>
+            </dl>
+		
+		
+		<h3 class="demo-panel-title">选择条约</h3>
 		<div class="col-md-6">
 			<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "没有数据" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; if(($mod) == "0"): ?><!-- 0是奇数 -->
 					<label class="checkbox checked" for="checkbox2">
@@ -140,7 +67,7 @@
 </form>
 <form class="form-signin" id="newPost" name="newPost" method="post" action="<?php echo U('User/newTreaty');?>" >
 	<div class="row demo-row">
-		<h3 class="demo-panel-title">添加条约</h3>
+		<h3 class="demo-panel-title">或者添加条约</h3>
 		<div class="col-md-7">
 			第一步，请输入条款：
 			<div class="form-group">
@@ -167,13 +94,15 @@
 	</div> <!-- /container -->
 
 	<!-- </dl> -->
-		<footer>
+	
+	<footer>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-7">
+				<div class="col-md-10">
 					<h3 class="footer-title">关于</h3>
 					<p>您是不是喜欢这个应用呢？<br>
-					  如果喜欢的话可以关注我们的微博：<a href="http://weibo.com/u/3947676737" target="_blank">新浪微博</a><br>
+					  可以关注我们的微博：<a href="http://weibo.com/u/3947676737" target="_blank">新浪微博</a><br>
+					 也欢迎访问我们的官网：<a href="http://aqyh.sinaapp.com/" target="_blank">官方网站</a><br>
 					  您也可以赞助我们：
 						<a class="footer-brand" href="https://me.alipay.com/co8bit" target="_blank">
 							<img src="__PUBLIC__/FlatUI/images/donate_link.png" alt="donate_link">
@@ -181,17 +110,6 @@
 					</p>
 				</div> <!-- /col-md-7 -->
 
-				<div class="col-md-5">
-					<div class="footer-banner">
-						<h3 class="footer-title">使用帮助</h3>
-						<ul>
-							<li><a href="http://aqyh.sinaapp.com/help.php" target="_blank">新手教程</a></li>
-							<li><a href="http://aqyh.sinaapp.com/" target="_blank">提交建议</a></li>
-							<li><a href="http://aqyh.sinaapp.com/" target="_blank">官方网站</a></li>
-						</ul>
-						
-					</div>
-				</div>
 			</div>
 		</div>
 	</footer>
@@ -212,5 +130,3 @@
 	<script src="__PUBLIC__/FlatUI/js/application.js"></script>
 </body>
 </html>
-	
-<!-- Bootstrap -->    <script src="__PUBLIC__/js/bootstrap.min.js"></script>

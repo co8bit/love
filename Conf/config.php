@@ -4,7 +4,7 @@ return array(
 	'SHOW_PAGE_TRACE' =>true, // 显示页面Trace信息
 	
 	//主题相关
-	'DEFAULT_THEME' => 'Mobile',//设置默认主题为PC
+	'DEFAULT_THEME' => 'PC',//设置默认主题为PC
 	'THEME_LIST'=>'PC,Mobile',//支持的模板主题项
 	//'TMPL_DETECT_THEME' => 	true, // 自动侦测模板主题,开启后会把火狐识别成手机
 		
@@ -23,8 +23,8 @@ return array(
 	//'TMPL_ACTION_ERROR'     => THINK_PATH.'Public:error', // 默认错误跳转对应的模板文件
 	//'TMPL_ACTION_SUCCESS'   => THINK_PATH.'Public:success', // 默认成功跳转对应的模板文件
 	//默认错误跳转对应的模板文件
-	'TMPL_ACTION_ERROR' => APP_PATH . 'Tpl/dispatch_jump.tpl',
+	'TMPL_ACTION_ERROR' => APP_PATH . 'Tpl/PC/dispatch_jump.tpl',
 	//默认成功跳转对应的模板文件
-	'TMPL_ACTION_SUCCESS' => APP_PATH . 'Tpl/dispatch_jump.tpl',
+	'TMPL_ACTION_SUCCESS' => APP_PATH . 'Tpl/PC/dispatch_jump.tpl',
 );
 ?>

@@ -2,7 +2,9 @@
 
 <form class="form-signin" id="newPost" name="newPost" method="post" action="{:U('User/newTarget')}" >
 	<div class="row demo-row">
-		<h2><center>设定奖励</center></h2>
+		<dl class="palette palette-peter-river">
+        	<h3 class="demo-panel-title"><center>设定奖励</center></h3>
+        </dl>
 		
 		<div class="col-md-3">
 			第一步，输入条件：
@@ -24,7 +26,6 @@
 				<button class="btn btn-info btn-lg btn-block" type="submit">添加</button>
 			</div>
 		</div>
-		
+		<a class="btn btn-primary btn-lg btn-block" href="{:U('User/index')}">返回</a>
 	</div>
-	<a class="btn btn-primary btn-lg btn-block" href="{:U('User/index')}">返回</a>
 </form>

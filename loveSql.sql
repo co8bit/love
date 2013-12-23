@@ -42,7 +42,7 @@ create table pair(
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 insert pair values(NULL,1,2,"2013-12-18 00:00:00",100,1,"","",0);/*lowId在创建的时候需要在low里插入一个新的记录，内容是拷贝lowId=1的内容*/
 
-create table tempPair(
+create table temppair(
 	tempPairId bigint NOT NULL AUTO_INCREMENT,
 	userStartId bigint NOT NULL,
 	userEndId bigint NOT NULL,

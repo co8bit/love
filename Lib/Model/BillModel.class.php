@@ -42,6 +42,7 @@ class BillModel extends Model {
 				$data["remark"] = _SUB_REMARK;
 			}
 		}
+		$data["billTime"] = date("Y-m-d H:i:s");
 	}
 	
 	public function insertTempBill($remark = NULL,$money = NULL)//插入一个临时账单

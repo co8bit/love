@@ -183,9 +183,7 @@ class UserAction extends CommonAction
 	
 	public function changeMood()
 	{
-		//$this->assign('waitSecond',135);
-		
-		if (session('myMoodValue') == $this->_get("mood"))//更新前更新后是一样的值会导致$result返回false，即没有更新
+		if (session('myMoodValue') == $this->_param("mood"))//更新前更新后是一样的值会导致$result返回false，即没有更新
 		{
 			redirect(U('User/index'),0);
 		}
@@ -193,7 +191,37 @@ class UserAction extends CommonAction
 		{
 			$condition = NULL;
 			//$condition['userId'] = session('pairUserId');
-			$condition['moodValue'] = $this->_get("mood");
+			$condition['moodValue'] = $this->_param("mood");
+			$dbUser = M("User");
+			$result = $dbUser->where('userId='.session('pairUserId'))->save($condition);
+			if($result)
+			{
+				redirect(U('User/index'),0);
+			}
+			else
+			{
+				$this->error('登陆有问题，系统退出后请重新登录','__APP__/Index/logout');
+			}
+		}
+	}
+	
+	public function changeMoodMobile()
+	{
+		$this->display();
+	}
+	
+	public function toChangeMoodMobile()
+	{
+		$tmp = $this->_param("radio");
+		if (session('myMoodValue') == $tmp)//更新前更新后是一样的值会导致$result返回false，即没有更新
+		{
+			redirect(U('User/index'),0);
+		}
+		else
+		{
+			$condition = NULL;
+			//$condition['userId'] = session('pairUserId');
+			$condition['moodValue'] = $tmp;
 			$dbUser = M("User");
 			$result = $dbUser->where('userId='.session('pairUserId'))->save($condition);
 			if($result)
@@ -463,12 +491,14 @@ class UserAction extends CommonAction
 				$output[$i]["messageTitle"] = "加分订单";
 				$output[$i]["messageTitlePic"] = "chat";
 				$output[$i]["money"] = $data[$i]["money"];
+				$output[$i]["classStr"] = "\"palette palette-peter-river\"";
 			}
 			else
 			{
 				$output[$i]["messageTitle"] = "减分订单";
 				$output[$i]["messageTitlePic"] = "mail";
 				$output[$i]["money"] = $data[$i]["money"];
+				$output[$i]["classStr"] = "\"palette palette-alizarin\"";
 			}
 			$output[$i]["remark"] = $data[$i]["remark"];
 			$output[$i]["mId"] = $data[$i]["billId"];

@@ -8,6 +8,8 @@ Class CommonAction extends Action
 		{
 			//设置默认默认主题为 Mobile
 			C('DEFAULT_THEME','Mobile');
+			C('TMPL_ACTION_ERROR','Tpl/Mobile/dispatch_jump.php');
+			C('TMPL_ACTION_SUCCESS','Tpl/Mobile/dispatch_jump.php');
 		}
 		//............你的更多代码.......
 	}

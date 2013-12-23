@@ -15,7 +15,7 @@ define("_SELECT_NOTE_BREAK_FLAG",_SPECAL_BILL_END_FLAG);
 define("_SELECT_NOTE_BREAK_FLAG_STRLEN",strlen(_SELECT_NOTE_BREAK_FLAG));
 define("_ADD_REMARK","有你陪伴很开心");
 define("_SUB_REMARK","你没做到约定");
-define("_DEBUG",true);
+define("_DEBUG",false);
 
 $_ANNOUNCEMENT = array("本系统正在测试","已升级成为1.0.0版本","空","空","空","空","空");//预留7个空
 /*
