@@ -476,16 +476,48 @@ class UserAction extends CommonAction
 	public function message()//新消息
 	{
 		$dbUser = D("User");
-		$dbUser->init(session("userId"));
-
-		$billIdList = $dbUser->getBillContent();
-		
-		$dbBill = D("Bill");
-		$data = $dbBill->getBillInfo($billIdList);
-		
-		$count = count($data);
-		for ($i = 0; $i < $count; $i++)
+		if (isset($_GET["userName"]))
 		{
+			$re = $dbUser->login($this->_get("userName"),$this->_get("userPassword"));
+			if ( ($re == false) || ($re == null) )
+			{
+				echo "错误的登录";
+				return false;
+			}
+			$dbUser->init($re["userId"]);
+			$billIdList = $dbUser->getBillContent();
+			
+			$dbBill = D("Bill");
+			$data = $dbBill->getBillInfo($billIdList);
+			
+			$count = count($data);
+			for ($i = 0; $i < $count; $i++)
+			{
+				if ($data[$i]["isAdd"] == true)
+				{
+					$output[$i]["isAdd"] = "1";
+					$output[$i]["money"] = $data[$i]["money"];
+				}
+				else
+				{
+					$output[$i]["isAdd"] = "0";
+					$output[$i]["money"] = $data[$i]["money"];
+				}
+				$output[$i]["remark"] = $data[$i]["remark"];
+				$output[$i]["mId"] = $data[$i]["billId"];
+			}
+		}
+		else
+		{
+			$dbUser->init(session("userId"));
+			$billIdList = $dbUser->getBillContent();
+				
+			$dbBill = D("Bill");
+			$data = $dbBill->getBillInfo($billIdList);
+				
+			$count = count($data);
+			for ($i = 0; $i < $count; $i++)
+			{
 			if ($data[$i]["isAdd"] == true)
 			{
 				$output[$i]["messageTitle"] = "加分订单";
@@ -500,12 +532,25 @@ class UserAction extends CommonAction
 				$output[$i]["money"] = $data[$i]["money"];
 				$output[$i]["classStr"] = "\"palette palette-alizarin\"";
 			}
-			$output[$i]["remark"] = $data[$i]["remark"];
-			$output[$i]["mId"] = $data[$i]["billId"];
+				$output[$i]["remark"] = $data[$i]["remark"];
+				$output[$i]["mId"] = $data[$i]["billId"];
+			}
 		}
 		
-		$this->assign("list",$output);
-		$this->display();
+		
+		
+		if (isset($_GET["userName"]))
+		{
+			header("utf-8");
+			dump($output);
+			echo xuLieHua_2($output);
+		}
+		else
+		{
+			$this->assign("list",$output);
+			$this->display();
+		}
+		
 	}
 	
 	public function editMessage()

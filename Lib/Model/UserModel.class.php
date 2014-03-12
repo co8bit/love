@@ -31,6 +31,36 @@ class UserModel extends Model {
 		$this->userId = $userId;
 	}
 	
+	public function login($userName,$userPassword)
+	/*
+	 * 判断用户名和密码是否能登录
+	* @param string $userPassword 用户密码
+	* @return 数据库返回的结果集，数组大小应为1。外面调用形如$re[0][]
+	*/
+	{
+		$condition['userName'] = $userName;
+		$condition['userPassword'] = $userPassword;
+		$tmp = $this->where($condition)->select();
+		return $tmp[0];
+	}
+	
+	/*
+	 * 得到指定用户的用户信息
+	* @param	string $name;用户名
+	* @return	array;
+	* 				查询成功返回用户所有字段的数组
+	* 				没查到返回null
+	* 				查询错误返回false
+	*/
+	public function getUserInfo($name)
+	{
+		$tmp = $this->where("userName=\"".$name."\"")->select();
+		if ( ($tmp === false) || ($tmp === null) )
+			return $tmp;
+		else
+			return $tmp[0];
+	}
+	
 	public function getOriginBillContent()//得到原始内容
 	{
 		if ($this->billOrignContent === NULL)

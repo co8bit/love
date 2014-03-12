@@ -31,4 +31,15 @@ function ismobile() {
 	}
 	return false;
 }
+
+function xuLieHua_2($arr)
+{
+	$str = "";
+	for ($i = 0; $i < count($arr); $i++)
+		foreach ($arr[$i] as $value)
+		{
+			$str .= $value . "@$12as&*";
+		}
+	return $str;
+}
 ?>
