@@ -260,9 +260,23 @@ class UserAction extends CommonAction
 	
 	public function toAdd()//与toSub对称
 	{
+		$dbUser = D("User");
 		$dbBill = D("Bill");
-		$dbBill->init(session("userId"),session("pairUserId"),true);
-		
+		if (isset($_GET["userName"]))
+		{
+			$re = $dbUser->login($this->_get("userName"),$this->_get("userPassword"));
+			if ( ($re == false) || ($re == null) )
+			{
+				echo "错误的登录";
+				return false;
+			}
+			$dbBill->init($re["userId"],$re["pairUserId"],true);
+		}
+		else
+		{
+			$dbBill->init(session("userId"),session("pairUserId"),true);
+		}
+// 		$dbBill->insertTempBill();
 		$this->isOk(-1,$dbBill->insertTempBill(),"转账申请成功，等待对方确认","User/index","转账错误，请重试","User/add");
 	}
 	
@@ -274,8 +288,22 @@ class UserAction extends CommonAction
 	
 	public function toSub()//与toAdd对称
 	{
+		$dbUser = D("User");
 		$dbBill = D("Bill");
-		$dbBill->init(session("userId"),session("pairUserId"),false);
+		if (isset($_GET["userName"]))
+		{
+			$re = $dbUser->login($this->_get("userName"),$this->_get("userPassword"));
+			if ( ($re == false) || ($re == null) )
+			{
+				echo "错误的登录";
+				return false;
+			}
+			$dbBill->init($re["userId"],$re["pairUserId"],false);
+		}
+		else
+		{
+			$dbBill->init(session("userId"),session("pairUserId"),false);
+		}
 		
 		$this->isOk(-1,$dbBill->insertTempBill(),"扣除申请成功，等待对方确认","User/index","转账错误，请重试","User/sub");
 	}
@@ -501,10 +529,16 @@ class UserAction extends CommonAction
 				else
 				{
 					$output[$i]["isAdd"] = "0";
-					$output[$i]["money"] = $data[$i]["money"];
+					$output[$i]["money"] = (0 - $data[$i]["money"]);
 				}
 				$output[$i]["remark"] = $data[$i]["remark"];
 				$output[$i]["mId"] = $data[$i]["billId"];
+				$output[$i]["userStartID"] = $data[$i]["userStartID"];
+				$output[$i]["up1Msg"] = $data[$i]["up1Msg"];
+				$output[$i]["up2Msg"] = $data[$i]["up2Msg"];
+				$output[$i]["upUser"] = $data[$i]["upUser"];
+				$output[$i]["toUser1"] = $data[$i]["toUser1"];
+				$output[$i]["toUser2"] = $data[$i]["toUser2"];
 			}
 		}
 		else
@@ -541,8 +575,8 @@ class UserAction extends CommonAction
 		
 		if (isset($_GET["userName"]))
 		{
-			header("utf-8");
-			dump($output);
+			header("Content-type: text/html; charset=utf-8");
+// 			dump($output);
 			echo xuLieHua_2($output);
 		}
 		else
@@ -555,20 +589,50 @@ class UserAction extends CommonAction
 	
 	public function editMessage()
 	{
+		$dbUser = D("User");
 		$dbBill = D("Bill");
-		$dbBill->init(session("userId"),session("pairUserId"));
+		if (isset($_GET["userName"]))
+		{
+			$re = $dbUser->login($this->_get("userName"),$this->_get("userPassword"));
+			if ( ($re == false) || ($re == null) )
+			{
+				echo "错误的登录";
+				return false;
+			}
+			$dbBill->init($re["userId"],$re["pairUserId"]);
+		}
+		else
+		{
+			$dbBill->init(session("userId"),session("pairUserId"));
+		}
 		
-		//$dbBill->editTempBill($this->_post("mId"));
-		$this->isOk(-1,$dbBill->editTempBill($this->_post("mId")),"修改成功","User/message","修改错误，请重试","User/message");
+// 		$dbBill->editTempBill($this->_param("mId"));
+		$this->isOk(-1,$dbBill->editTempBill($this->_param("mId")),"修改成功","User/message","修改错误，请重试","User/message");
 	}
 	
 	public function acceptMessage()
 	{
+		$dbUser = D("User");
 		$dbBill = D("Bill");
-		$dbBill->init(session("userId"),session("pairUserId"));
+		if (isset($_GET["userName"]))
+		{
+			$re = $dbUser->login($this->_get("userName"),$this->_get("userPassword"));
+			if ( ($re == false) || ($re == null) )
+			{
+				echo "错误的登录";
+				return false;
+			}
+			$dbBill->init($re["userId"],$re["pairUserId"]);
+			$pairId = $re["pairId"];
+		}
+		else
+		{
+			$pairId = session("pairId");
+			$dbBill->init(session("userId"),session("pairUserId"));
+		}
 		
-		//$dbBill->acceptTempBill($this->_get("id"),session("pairId"));
-		$this->isOk(-1,$dbBill->acceptTempBill($this->_get("id"),session("pairId")),"确认成功","User/message","确认错误，请重试","User/message");
+		//$dbBill->acceptTempBill($this->_param("id"),$pairId);
+		$this->isOk(-1,$dbBill->acceptTempBill($this->_param("id"),$pairId),"确认成功","User/message","确认错误，请重试","User/message");
 	}
 	
 	public function note()//重要提醒

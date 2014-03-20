@@ -67,6 +67,19 @@ create table bill(
 	money int,
 	isAdd boolean,
 	billTime datetime,
+	
+	userStartID int NOT NULL,/*发起人ID*/
+	up1Msg LONGTEXT NOT NULL,/*上一条remark*/
+	upUser int NOT NULL,/*上一个用户（即上一条remark是谁的）*/
+	toUser1 int NOT NULL,//目标用户1ID
+	toUser2 int NOT NULL,//目标用户2ID
+	/*
+	 ALTER TABLE `bill` ADD `userStartID` int NOT NULL ;
+	  ALTER TABLE `bill` ADD `up1Msg` LONGTEXT NOT NULL ;
+	 ALTER TABLE `bill` ADD `upUser` int NOT NULL ;
+	 ALTER TABLE `bill` ADD `toUser1` int NOT NULL ;
+	 ALTER TABLE `bill` ADD `toUser2` int NOT NULL ;
+	 */
 	primary key(billId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
